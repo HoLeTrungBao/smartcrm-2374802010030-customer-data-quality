@@ -1,0 +1,149 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Star-Schema-ERD" id="ERD-DA-01">
+    <mxGraphModel dx="1050" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Header -->
+        <mxCell id="title" value="LƯỢC ĐỒ KHO DỮ LIỆU - STAR SCHEMA (TRACK DA)&#xa;Hệ thống Smart CRM - Quản lý chất lượng dữ liệu khách hàng" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Grain Statement Box -->
+        <mxCell id="grain_box" value="TUYÊN BỐ MỨC ĐỘ HẠT (GRAIN):&#xa;Mỗi dòng trong bảng Fact fact_customer_quality_audit đại diện cho kết quả kiểm định chất lượng của MỘT bản ghi khách hàng (record_id) trong MỘT phiên chạy (run_key) theo MỘT quy tắc chất lượng (rule_key)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="120" y="70" width="860" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Fact Table (Center) -->
+        <mxCell id="fact_table" value="fact_customer_quality_audit&#xa;(Bảng Fact Sự kiện kiểm định)" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#EF4444;fontColor=#991B1B;" vertex="1" parent="1">
+          <mxGeometry x="400" y="240" width="300" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c1" value="+ PK  audit_id : BIGINT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;" vertex="1" parent="fact_table">
+          <mxGeometry y="30" width="300" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c2" value="+ FK  customer_key : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;fontColor=#2563EB;" vertex="1" parent="fact_table">
+          <mxGeometry y="54" width="300" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c3" value="+ FK  run_key : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;fontColor=#16A34A;" vertex="1" parent="fact_table">
+          <mxGeometry y="78" width="300" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c4" value="+ FK  rule_key : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;fontColor=#D97706;" vertex="1" parent="fact_table">
+          <mxGeometry y="102" width="300" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c5" value="  is_passed : BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="fact_table">
+          <mxGeometry y="126" width="300" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c6" value="  is_missing : BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="fact_table">
+          <mxGeometry y="148" width="300" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c7" value="  is_invalid_format : BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="fact_table">
+          <mxGeometry y="170" width="300" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c8" value="  is_duplicate : BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="fact_table">
+          <mxGeometry y="192" width="300" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c9" value="  is_auto_cleaned : BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="fact_table">
+          <mxGeometry y="214" width="300" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="f_c10" value="  quality_score : DECIMAL(5,2)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;" vertex="1" parent="fact_table">
+          <mxGeometry y="236" width="300" height="24" as="geometry" />
+        </mxCell>
+
+        <!-- Dim Customer (Left) -->
+        <mxCell id="dim_cust" value="dim_customer&#xa;(Bảng chiều Khách hàng)" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#3B82F6;fontColor=#1E40AF;" vertex="1" parent="1">
+          <mxGeometry x="50" y="240" width="250" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c1" value="+ PK  customer_key : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;fontColor=#1D4ED8;" vertex="1" parent="dim_cust">
+          <mxGeometry y="30" width="250" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c2" value="  record_id : BIGINT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="54" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c3" value="  ho_ten_goc : VARCHAR(255)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="76" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c4" value="  ho_ten_clean : VARCHAR(255)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="98" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c5" value="  so_dien_thoai_goc : VARCHAR(50)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="120" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c6" value="  so_dien_thoai_clean : VARCHAR(15)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="142" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c7" value="  email_clean : VARCHAR(255)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="164" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c8" value="  dia_chi_clean : VARCHAR(500)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="186" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c9" value="  ngay_tao : DATE" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="208" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dc_c10" value="  status : VARCHAR(50)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_cust">
+          <mxGeometry y="230" width="250" height="22" as="geometry" />
+        </mxCell>
+
+        <!-- Dim Audit Run (Top) -->
+        <mxCell id="dim_run" value="dim_audit_run&#xa;(Bảng chiều Phiên kiểm định)" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#22C55E;fontColor=#15803D;" vertex="1" parent="1">
+          <mxGeometry x="420" y="130" width="260" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="dr_c1" value="+ PK  run_key : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;fontColor=#16A34A;" vertex="1" parent="dim_run">
+          <mxGeometry y="30" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="dr_c2" value="  run_date : TIMESTAMP" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_run">
+          <mxGeometry y="54" width="260" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dr_c3" value="  total_records : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_run">
+          <mxGeometry y="76" width="260" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dr_c4" value="  run_by : VARCHAR(100)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_run">
+          <mxGeometry y="98" width="260" height="22" as="geometry" />
+        </mxCell>
+
+        <!-- Dim Quality Rule (Right) -->
+        <mxCell id="dim_rule" value="dim_quality_rule&#xa;(Bảng chiều Danh mục Quy tắc)" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#F59E0B;fontColor=#B45309;" vertex="1" parent="1">
+          <mxGeometry x="800" y="240" width="260" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="dqr_c1" value="+ PK  rule_key : INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;fontStyle=1;fontColor=#D97706;" vertex="1" parent="dim_rule">
+          <mxGeometry y="30" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="dqr_c2" value="  rule_code : VARCHAR(10)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_rule">
+          <mxGeometry y="54" width="260" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dqr_c3" value="  rule_name : VARCHAR(100)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_rule">
+          <mxGeometry y="76" width="260" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dqr_c4" value="  target_column : VARCHAR(50)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_rule">
+          <mxGeometry y="98" width="260" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="dqr_c5" value="  severity : VARCHAR(20)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" vertex="1" parent="dim_rule">
+          <mxGeometry y="120" width="260" height="22" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships -->
+        <!-- dim_customer (1) to fact (N) -->
+        <mxCell id="rel_cust" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.15;entryDx=0;entryDy=0;strokeColor=#2563EB;strokeWidth=2;fontColor=#1D4ED8;fontSize=11;" edge="1" parent="1" source="dim_cust" target="fact_table">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- dim_run (1) to fact (N) -->
+        <mxCell id="rel_run" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#16A34A;strokeWidth=2;fontColor=#15803D;fontSize=11;" edge="1" parent="1" source="dim_run" target="fact_table">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- dim_rule (1) to fact (N) -->
+        <mxCell id="rel_rule" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.35;entryDx=0;entryDy=0;strokeColor=#D97706;strokeWidth=2;fontColor=#B45309;fontSize=11;" edge="1" parent="1" source="dim_rule" target="fact_table">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend / Notes -->
+        <mxCell id="erd_legend" value="CHÚ THÍCH KÝ HIỆU &amp; QUAN HỆ:&#xa;• PK (Primary Key): Khóa chính của bảng&#xa;• FK (Foreign Key): Khóa ngoại tham chiếu bảng chiều (Dimension)&#xa;• Quan hệ 1 : N: Mỗi bản ghi trong bảng chiều nối với nhiều bản ghi kiểm định trong bảng sự kiện (Fact)&#xa;• Cấu trúc Star Schema đạt chuẩn mô hình hóa kho dữ liệu của Ralph Kimball." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;fontColor=#334155;fontSize=10;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="550" width="860" height="65" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
