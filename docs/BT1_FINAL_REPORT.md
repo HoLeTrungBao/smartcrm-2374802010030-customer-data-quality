@@ -12,8 +12,8 @@
 * **Mã số sinh viên (MSSV):** 2374802010030
 * **Lớp:** Chuyên đề Tốt nghiệp 1 – Khoa Công nghệ Thông tin
 * **Ngày nộp:** 09/10/2026
-* **LINK GITHUB REPO CHÍNH THỨC:** [https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality](https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality)  
-  *(Giảng viên có thể bấm trực tiếp vào đường link trên để truy cập mã nguồn và các file sơ đồ .drawio gốc)*
+* **LINK GITHUB REPO CHÍNH THỨC:** [https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality](https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality)
+
 
 ---
 

@@ -1,0 +1,112 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Wireframe-3-Man-Hinh" id="WF-DA-01">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Tiêu đề sơ đồ Wireframe -->
+        <mxCell id="title" value="BẢN VẼ WIREFRAME 3 MÀN HÌNH DASHBOARD (LO-FI WIREFRAME - TRACK DA)&#xa;Hệ thống Smart CRM - Mekong Mobile | Luồng L7: Kiểm tra &amp; Làm sạch dữ liệu khách hàng" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="950" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- MÀN HÌNH 1: DASHBOARD TỔNG QUAN CHỈ SỐ CHẤT LƯỢNG DỮ LIỆU (Liên kết: UC07) -->
+        <!-- ========================================================================= -->
+        <mxCell id="screen1_win" value="MÀN HÌNH 1: DASHBOARD TỔNG QUAN CHẤT LƯỢNG DỮ LIỆU (Nối Use Case: UC07)" style="swimlane;whiteSpace=wrap;html=1;startSize=30;fillColor=#F8FAFC;strokeColor=#475569;fontStyle=1;fontColor=#0F172A;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="500" height="700" as="geometry" />
+        </mxCell>
+        <!-- Nav / Top bar -->
+        <mxCell id="s1_nav" value="Smart CRM &gt; Quản lý dữ liệu &gt; Tổng quan chất lượng (Actor: Quản lý cửa hàng, Marketing)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#64748B;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="screen1_win">
+          <mxGeometry x="15" y="40" width="470" height="25" as="geometry" />
+        </mxCell>
+        <!-- Filter bar -->
+        <mxCell id="s1_filter" value="[BỘ LỌC]:  Đợt kiểm định: [ Chọn đợt ▼ ]     Trạng thái: [ Tất cả ▼ ]     [ Nút: Lọc dữ liệu ]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#94A3B8;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="screen1_win">
+          <mxGeometry x="15" y="75" width="470" height="35" as="geometry" />
+        </mxCell>
+        <!-- 4 KPI Boxes (Placeholders) -->
+        <mxCell id="s1_kpi1" value="[CHỈ SỐ TỔNG HỢP 1]&#xa;Tổng số bản ghi nạp&#xa;{COUNT(customer_key)}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;fontSize=9;fontStyle=1;align=center;" vertex="1" parent="screen1_win">
+          <mxGeometry x="15" y="120" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_kpi2" value="[CHỈ SỐ TỔNG HỢP 2]&#xa;Tỷ lệ đạt chuẩn sạch&#xa;{% SUM(is_passed)}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;fontSize=9;fontStyle=1;align=center;" vertex="1" parent="screen1_win">
+          <mxGeometry x="135" y="120" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_kpi3" value="[CHỈ SỐ TỔNG HỢP 3]&#xa;Tỷ lệ nguy cơ trùng&#xa;{% SUM(is_duplicate)}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;fontSize=9;fontStyle=1;align=center;" vertex="1" parent="screen1_win">
+          <mxGeometry x="255" y="120" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s1_kpi4" value="[CHỈ SỐ TỔNG HỢP 4]&#xa;Tỷ lệ thiếu (NULL)&#xa;{% SUM(is_missing)}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#64748B;fontSize=9;fontStyle=1;align=center;" vertex="1" parent="screen1_win">
+          <mxGeometry x="375" y="120" width="110" height="60" as="geometry" />
+        </mxCell>
+        <!-- Chart Placeholder 1.1 -->
+        <mxCell id="s1_chart1" value="[KHUNG BIỂU ĐỒ 1.1 - CỘT NGANG]&#xa;&#xa;Tỷ lệ vi phạm theo từng quy tắc DQ&#xa;(DQ01, DQ02, DQ03, DQ04, DQ05, DQ06)&#xa;&#xa;[ X ] CHART PLACEHOLDER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.5;fontSize=10;align=center;" vertex="1" parent="screen1_win">
+          <mxGeometry x="15" y="195" width="470" height="150" as="geometry" />
+        </mxCell>
+        <!-- Chart Placeholder 1.2 -->
+        <mxCell id="s1_chart2" value="[KHUNG BIỂU ĐỒ 1.2 - TRÒN / DONUT]&#xa;&#xa;Phân bố xếp loại điểm chất lượng bản ghi&#xa;(Xuất sắc: 90-100đ | Trung bình: 70-89đ | Kém: &lt;70đ)&#xa;&#xa;[ X ] CHART PLACEHOLDER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.5;fontSize=10;align=center;" vertex="1" parent="screen1_win">
+          <mxGeometry x="15" y="355" width="470" height="150" as="geometry" />
+        </mxCell>
+        <!-- Source Annotation Box 1 -->
+        <mxCell id="s1_source" value="[GHI CHÚ NGUỒN DỮ LIỆU ĐỐI CHIẾU MÔ HÌNH]:&#xa;• Thẻ KPI: Tính từ COUNT(customer_key), SUM(is_passed), SUM(is_duplicate), SUM(is_missing) trong bảng Fact fact_customer_quality_audit.&#xa;• Biểu đồ 1.1: Nhóm theo rule_code từ dim_quality_rule kết hợp fact_customer_quality_audit.&#xa;• Biểu đồ 1.2: Phân dải điểm từ trường quality_score trong bảng Fact." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontSize=9.5;align=left;spacingLeft=6;" vertex="1" parent="screen1_win">
+          <mxGeometry x="15" y="520" width="470" height="160" as="geometry" />
+        </mxCell>
+
+
+        <!-- ========================================================================= -->
+        <!-- MÀN HÌNH 2: PHÂN TÍCH & XỬ LÝ TRÙNG LẶP KHÁCH HÀNG (Liên kết: UC04)         -->
+        <!-- ========================================================================= -->
+        <mxCell id="screen2_win" value="MÀN HÌNH 2: PHÂN TÍCH &amp; XỬ LÝ TRÙNG LẶP KHÁCH HÀNG (Nối Use Case: UC04)" style="swimlane;whiteSpace=wrap;html=1;startSize=30;fillColor=#F8FAFC;strokeColor=#475569;fontStyle=1;fontColor=#0F172A;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="570" y="80" width="500" height="700" as="geometry" />
+        </mxCell>
+        <!-- Nav / Top bar -->
+        <mxCell id="s2_nav" value="Smart CRM &gt; Làm sạch dữ liệu &gt; Đối soát trùng lặp (Actor: Marketing)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#64748B;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="screen2_win">
+          <mxGeometry x="15" y="40" width="470" height="25" as="geometry" />
+        </mxCell>
+        <!-- Filter bar -->
+        <mxCell id="s2_filter" value="[BỘ LỌC]:  Tiêu chí đối sánh: [ Trùng Số điện thoại ▼ ]    Số lần lặp: [ &gt;= 2 lần ▼ ]    [ Nút: Quét trùng ]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#94A3B8;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="screen2_win">
+          <mxGeometry x="15" y="75" width="470" height="35" as="geometry" />
+        </mxCell>
+        <!-- Chart Placeholder 2.1 -->
+        <mxCell id="s2_chart1" value="[KHUNG BIỂU ĐỒ 2.1 - CỘT]&#xa;&#xa;Top nhóm giá trị SĐT / Email xuất hiện lặp lại nhiều nhất&#xa;(Phân tích tần suất bản ghi nghi ngờ trùng)&#xa;&#xa;[ X ] CHART PLACEHOLDER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.5;fontSize=10;align=center;" vertex="1" parent="screen2_win">
+          <mxGeometry x="15" y="120" width="470" height="130" as="geometry" />
+        </mxCell>
+        <!-- Table Placeholder 2.2 -->
+        <mxCell id="s2_table" value="[KHUNG BẢNG BIỂU 2.2 - DANH SÁCH BẢN GHI NGHI NGỜ TRÙNG LẶP]&#xa;&#xa;+---------------------------------------------------------------------------------------------------------+&#xa;| [Mã record_id] | [Họ tên ho_ten_clean] | [SĐT so_dien_thoai_clean] | [Email email_clean] | [Ngày tạo]   |&#xa;+---------------------------------------------------------------------------------------------------------+&#xa;| Bản ghi mẫu 1  | Nguyễn Văn A          | 0903123456                | a@gmail.com         | 2024-05-26   |&#xa;| Bản ghi mẫu 2  | Nguyen Van A          | 0903123456                | (NULL)              | 2025-01-13   |&#xa;+---------------------------------------------------------------------------------------------------------+&#xa;Thao tác xử lý:   [ Nút: Xác nhận gộp nhóm ]      [ Nút: Giữ riêng biệt ]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.5;fontSize=9.5;align=center;" vertex="1" parent="screen2_win">
+          <mxGeometry x="15" y="265" width="470" height="240" as="geometry" />
+        </mxCell>
+        <!-- Source Annotation Box 2 -->
+        <mxCell id="s2_source" value="[GHI CHÚ NGUỒN DỮ LIỆU ĐỐI CHIẾU MÔ HÌNH]:&#xa;• Biểu đồ 2.1 &amp; Bảng 2.2: Truy vấn từ bảng dim_customer kết hợp fact_customer_quality_audit với điều kiện is_duplicate = TRUE.&#xa;• Các trường hiển thị trên giao diện: record_id, ho_ten_clean, so_dien_thoai_clean, email_clean, ngay_tao đều tồn tại trong bảng dim_customer.&#xa;• Cờ is_duplicate cập nhật vào bảng fact_customer_quality_audit." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontSize=9.5;align=left;spacingLeft=6;" vertex="1" parent="screen2_win">
+          <mxGeometry x="15" y="520" width="470" height="160" as="geometry" />
+        </mxCell>
+
+
+        <!-- ========================================================================= -->
+        <!-- MÀN HÌNH 3: TIẾN ĐỘ LÀM SẠCH & CHUẨN HÓA DỮ LIỆU (Liên kết: UC05, UC06)     -->
+        <!-- ========================================================================= -->
+        <mxCell id="screen3_win" value="MÀN HÌNH 3: TIẾN ĐỘ LÀM SẠCH &amp; CHUẨN HÓA DỮ LIỆU (Nối Use Case: UC05, UC06)" style="swimlane;whiteSpace=wrap;html=1;startSize=30;fillColor=#F8FAFC;strokeColor=#475569;fontStyle=1;fontColor=#0F172A;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="80" width="500" height="700" as="geometry" />
+        </mxCell>
+        <!-- Nav / Top bar -->
+        <mxCell id="s3_nav" value="Smart CRM &gt; Báo cáo chất lượng &gt; Tiến độ chuẩn hóa (Actor: Marketing, Quản lý)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#64748B;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="screen3_win">
+          <mxGeometry x="15" y="40" width="470" height="25" as="geometry" />
+        </mxCell>
+        <!-- Filter bar -->
+        <mxCell id="s3_filter" value="[BỘ LỌC]:  Nhóm quy tắc: [ Chuẩn hóa SĐT &amp; Họ tên ▼ ]     Đợt chạy: [ Mới nhất ▼ ]     [ Nút: Xem báo cáo ]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#94A3B8;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="screen3_win">
+          <mxGeometry x="15" y="75" width="470" height="35" as="geometry" />
+        </mxCell>
+        <!-- Chart Placeholder 3.1 -->
+        <mxCell id="s3_chart1" value="[KHUNG BIỂU ĐỒ 3.1 - CỘT ĐÔI TRƯỚC / SAU]&#xa;&#xa;So sánh số lượng bản ghi vi phạm TRƯỚC và SAU khi làm sạch&#xa;(SĐT có mã 84/+84 | Họ tên thừa khoảng trắng | Họ tên sai hoa thường)&#xa;&#xa;[ X ] CHART PLACEHOLDER (Before vs. After)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.5;fontSize=10;align=center;" vertex="1" parent="screen3_win">
+          <mxGeometry x="15" y="120" width="470" height="180" as="geometry" />
+        </mxCell>
+        <!-- Chart Placeholder 3.2 -->
+        <mxCell id="s3_chart2" value="[KHUNG BIỂU ĐỒ 3.2 - THANH TIẾN ĐỘ % (PROGRESS BARS)]&#xa;&#xa;Tỷ lệ hoàn tất chuẩn hóa dữ liệu tự động (%)&#xa;• Chuẩn hóa số điện thoại 10 số: [====================] 100%&#xa;• Chuẩn hóa cấu trúc họ tên:     [====================] 100%&#xa;• Bảo toàn bản ghi (0% mất mát):  [====================] 100%&#xa;&#xa;[ X ] PROGRESS PLACEHOLDER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1.5;fontSize=10;align=center;" vertex="1" parent="screen3_win">
+          <mxGeometry x="15" y="315" width="470" height="190" as="geometry" />
+        </mxCell>
+        <!-- Source Annotation Box 3 -->
+        <mxCell id="s3_source" value="[GHI CHÚ NGUỒN DỮ LIỆU ĐỐI CHIẾU MÔ HÌNH]:&#xa;• Biểu đồ 3.1: Đối chiếu trực tiếp giữa các trường thô (ho_ten_goc, so_dien_thoai_goc) và các trường sạch (ho_ten_clean, so_dien_thoai_clean) trong bảng chiều dim_customer.&#xa;• Biểu đồ 3.2: Tính tỷ lệ từ cờ is_auto_cleaned và is_invalid_format trong bảng Fact fact_customer_quality_audit.&#xa;• Đảm bảo chỉ số toàn vẹn bản ghi đạt NFR03 (0.00% hao hụt)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;fontColor=#92400E;fontSize=9.5;align=left;spacingLeft=6;" vertex="1" parent="screen3_win">
+          <mxGeometry x="15" y="520" width="470" height="160" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
