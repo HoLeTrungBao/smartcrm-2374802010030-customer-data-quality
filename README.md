@@ -1,118 +1,164 @@
-# Smart CRM – Customer Data Quality (Track DA)
+# Smart CRM – Customer Data Quality Pipeline (Track DA)
 
 **Học phần:** Chuyên đề Tốt nghiệp 1 (71ITGR40203) – Khoa CNTT, Trường Đại học Văn Lang  
+**Đề tài:** Smart CRM – Mekong Mobile  
+**Luồng nghiệp vụ:** L7 – Kiểm tra và làm sạch dữ liệu khách hàng (*Customer Data Quality*)  
 **Sinh viên thực hiện:** Hồ Lê Trung Bảo – MSSV: 2374802010030  
 **Chuyên ngành (Track):** Data Analytics (DA)  
 **Giảng viên hướng dẫn:** TS. Nguyễn Trí Hải  
 
 ---
 
-## 1. Mô tả bài toán
+## 1. Pipeline làm được gì
 
-**Luồng nghiệp vụ:** L7 – Kiểm tra và làm sạch dữ liệu khách hàng (*Customer Data Quality*).
-
-Bài toán tập trung vào việc tiếp nhận dữ liệu khách hàng từ chuỗi bán lẻ thiết bị di động Mekong Mobile, phân tích khám phá dữ liệu (Data Profiling) để phát hiện các vấn đề suy giảm chất lượng dữ liệu: dữ liệu bị thiếu (`NULL`), sai lệch định dạng số điện thoại (chứa mã `84`, `+84` hoặc dấu chấm), họ tên viết hoa lộn xộn hoặc thừa khoảng trắng, và phát hiện các bản ghi có nguy cơ trùng lặp khách hàng. Hệ thống thực hiện chuẩn hóa dữ liệu, nạp vào kho dữ liệu theo mô hình hình sao (Star Schema) và trực quan hóa kết quả kiểm định chất lượng lên Dashboard dành cho nhà quản lý.
-
----
-
-## 2. Phạm vi
-
-### 2.1. Trong phạm vi (Làm)
-* Nạp và khám phá cấu trúc dữ liệu khách hàng từ tập tin nguồn `customers_raw.csv` ($67.037$ bản ghi, $6$ thuộc tính).
-* Kiểm tra và thống kê các trường dữ liệu bị thiếu giá trị (NULL).
-* Phát hiện và phân loại các bản ghi khách hàng có nguy cơ trùng lặp dựa trên số điện thoại và email sau chuẩn hóa.
-* Chuẩn hóa định dạng số điện thoại về 10 chữ số chuẩn (`0xxxxxxxxx`) và chuẩn hóa họ tên về dạng Title Case (xóa khoảng trắng thừa).
-* Thiết kế mô hình kho dữ liệu Star Schema gồm bảng sự kiện `fact_customer_quality_audit` và các bảng chiều (`dim_customer`, `dim_quality_rule`, `dim_audit_run`).
-* Xây dựng wireframe 3 khung Dashboard trực quan hóa KPI chất lượng dữ liệu, chi tiết trùng lặp và tiến độ làm sạch dữ liệu.
-
-### 2.2. Ngoài phạm vi (Không làm - Mức WON'T của MoSCoW)
-* Không xây dựng hệ thống quản lý đơn hàng và thanh toán giao dịch bán lẻ (POS).
-* Không tiếp nhận và xử lý phiếu bảo hành linh kiện di động.
-* Không tự động gửi tin nhắn SMS Brandname hoặc Email Marketing đến khách hàng.
-* Không xây dựng mô hình Học máy (Machine Learning) dự đoán rời bỏ (Churn).
-* Không xóa vật lý (Hard Delete) các bản ghi nghi ngờ trùng lặp khi chưa có xác nhận từ người dùng.
-
----
-
-## 3. Công nghệ sử dụng
-
-| Thành phần | Công nghệ / Thư viện | Vai trò |
-| :--- | :--- | :--- |
-| **Ngôn ngữ lập trình** | Python 3.11+ | Ngôn ngữ phát triển pipeline xử lý dữ liệu |
-| **Xử lý dữ liệu** | Pandas, NumPy | Đọc file CSV, tiền xử lý, kiểm tra regex và chuẩn hóa chuỗi |
-| **Môi trường phân tích** | Jupyter Notebook | Môi trường thử nghiệm và khám phá dữ liệu (EDA) |
-| **Mô hình hóa dữ liệu** | Star Schema (Kimball) | Thiết kế kho dữ liệu Data Warehouse phục vụ báo cáo |
-| **Thiết kế sơ đồ** | draw.io | Vẽ Use Case, Kiến trúc dữ liệu và Star Schema |
-| **Quản lý mã nguồn** | Git & GitHub | Quản lý phiên bản mã nguồn theo Conventional Commits |
-
----
-
-## 4. Cấu trúc thư mục
+Hệ thống hiện thực hóa một Data Pipeline khép kín theo kiến trúc 4 pha độc lập:
 
 ```text
-smartcrm-2374802010030-customer-data-quality/
-├── data/
-│   ├── raw/
-│   │   └── customers_raw.csv         # Dữ liệu khách hàng thô (67.037 dòng)
-│   └── processed/                    # Dữ liệu khách hàng đã làm sạch sau ETL
-├── docs/
-│   ├── srs.md                        # Bản đặc tả yêu cầu phần mềm rút gọn (SRS)
-│   ├── architecture.drawio           # Sơ đồ kiến trúc Data Pipeline 5 tầng (file gốc)
-│   ├── usecase.drawio                # Sơ đồ Use Case phân hệ chất lượng dữ liệu (file gốc)
-│   ├── erd.drawio                    # Lược đồ kho dữ liệu Star Schema (file gốc)
-│   ├── wireframe.png                 # Bản vẽ Wireframe 3 khung Dashboard chất lượng
-│   ├── ai-disclosure.md              # Bảng khai báo sử dụng công cụ AI kèm cam kết
-│   ├── data-requirements.md          # Đặc tả dữ liệu, Data Flow và Grain bảng Fact (DA)
-│   ├── use-case.md                   # Đặc tả chi tiết Use Case UC04, UC05
-│   └── user-story.md                 # Danh sách User Story và tiêu chí chấp nhận (GWT)
-├── notebooks/
-│   └── 01_check_customers.ipynb      # Khám phá và thống kê chất lượng dữ liệu thực tế
-├── src/
-│   └── etl/
-│       ├── extract.py                # Trích xuất dữ liệu từ nguồn
-│       ├── transform.py              # Xử lý chuẩn hóa và kiểm định chất lượng
-│       └── load.py                   # Nạp dữ liệu vào kho phân tích
-├── .env.example                      # Cấu hình biến môi trường mẫu
-├── .gitignore                        # Cấu hình bỏ qua các tệp tin nhạy cảm/tạm thời
-├── requirements.txt                  # Danh sách các thư viện phụ thuộc
-└── README.md                         # Tài liệu hướng dẫn tổng quan dự án
+Nguồn CSV  ──>  Extract  ──>  Transform  ──>  Quality  ──>  Load  ──>  Kho dữ liệu Star Schema
+                                                │                         (Staging / Fact / Dim)
+                                                ▼
+                                    Bảng reject_rows + Báo cáo tự động (reports/*.md)
 ```
+
+- **extract (`src/extract/`):** Đọc an toàn $67.037$ dòng dữ liệu thô từ `customers_raw.csv`, **KHÔNG biến đổi**.
+- **transform (`src/transform/`):** Chuẩn hóa số điện thoại (4 định dạng thực tế về 10 số `0xxxxxxxxx`), chuẩn hóa họ tên về Title Case, chuẩn hóa email và đọc ngày theo các định dạng thực tế. Mọi quy tắc trong `rules.py` đều là **HÀM THUẦN**, không đọc/ghi CSDL.
+- **quality (`src/quality/`):** Đo lường **ba chiều chất lượng** (Đầy đủ · Chính xác · Nhất quán) với 9 phép đo định lượng — mỗi phép đo trả về số dòng kiểm, số dòng đạt, số dòng lỗi và tỷ lệ phần trăm cụ thể.
+- **load (`src/load/`):** Nạp vào bảng `staging_customers`, `dim_customer` và `fact_customer_quality_audit`; mọi dòng không chuẩn hóa được đều chuyển vào `reject_rows` kèm lý do cụ thể viết cho con người đọc.
+
+**Ba mục kiểm chứng cốt lõi của BT2:**
+1. Chạy hoàn tất bằng **MỘT lệnh duy nhất**.
+2. **Chạy lại lần hai không nhân đôi dữ liệu (Idempotent)** — số dòng trong kho dữ liệu giữ nguyên chính xác sau nhiều lần chạy.
+3. Kiểm tra chất lượng chạy **TRƯỚC KHI NẠP**, sinh báo cáo chi tiết Markdown và JSON tự động.
 
 ---
 
-## 5. Hướng dẫn cài đặt & chạy môi trường
+## 2. Cài đặt môi trường
 
-### Bước 1: Khởi tạo và kích hoạt môi trường ảo Python
-```powershell
-# Trên Windows PowerShell
+Yêu cầu: Python 3.11 trở lên.
+
+```bash
+# 1. Khởi tạo và kích hoạt môi trường ảo (tùy chọn)
 python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
+# Trên Windows:
+.venv\Scripts\activate
+# Trên Linux/macOS:
+source .venv/bin/activate
 
-### Bước 2: Cài đặt các thư viện phụ thuộc
-```powershell
+# 2. Cài đặt các thư viện cần thiết
 pip install -r requirements.txt
 ```
 
-### Bước 3: Khởi động Jupyter Notebook khám phá dữ liệu
-```powershell
-jupyter notebook
+---
+
+## 3. Chạy Pipeline — MỘT lệnh duy nhất
+
+```bash
+python -m src.pipeline
 ```
-Mở file `notebooks/01_check_customers.ipynb` để chạy các đoạn mã phân tích dữ liệu trên tập tin `data/raw/customers_raw.csv`.
+
+Lệnh này sẽ tự động khởi tạo cấu trúc CSDL SQLite kho dữ liệu (nếu chưa có), đọc dữ liệu thô, thực hiện làm sạch, đo lường 3 chiều chất lượng, nạp kho Star Schema và sinh báo cáo tự động tại thư mục `reports/`.
 
 ---
 
-## 6. Khai báo sử dụng công cụ AI
+## 4. Phép thử NẠP LẠI ĐƯỢC (Idempotent) — Tiêu chí cốt lõi C5
 
-Theo yêu cầu chuẩn mực học thuật của môn học Chuyên đề Tốt nghiệp 1:
+Kiểm chứng khả năng chạy lại an toàn trên cùng một lô dữ liệu mà không làm nhân đôi số lượng bản ghi:
 
-| Công cụ | Dùng vào việc gì | Áp dụng ở phần nào | Đã kiểm chứng thế nào |
-| :--- | :--- | :--- | :--- |
-| **ChatGPT / Antigravity AI** | Gợi ý cấu trúc bảng Fact và các bảng Dimension cho kho dữ liệu theo chuẩn Star Schema (Mô hình Kimball) phù hợp với bài toán Data Quality. | Mục 4 – Mô hình dữ liệu (`fact_customer_quality_audit`, `dim_customer`, `dim_quality_rule`, `dim_audit_run`). | Đối chiếu với lý thuyết Kimball về mô hình hóa kho dữ liệu; kiểm tra khóa chính, khóa ngoại, kiểu dữ liệu từng cột và tự phát biểu rõ ràng mức độ hạt (GRAIN) của bảng Fact. |
-| **ChatGPT / Antigravity AI** | Hỗ trợ chuẩn hóa cấu trúc câu lập luận quyết định kiến trúc hệ thống theo đúng khuôn mẫu quy định của đề bài. | Mục 3 – Thiết kế kiến trúc (3 câu giải thích kiến trúc gắn với mã NFR và phân tích đánh đổi). | Tự đối chiếu với các yêu cầu phi chức năng (NFR01, NFR02, NFR03), rà soát ngưỡng số thực tế của tập dữ liệu $67.037$ bản ghi và tự thẩm định các đánh đổi kỹ thuật. |
-| **— Không sử dụng AI —** *(Tự làm hoàn toàn)* | Khám phá dữ liệu thực tế (Data Profiling) trên tập tin nguồn `customers_raw.csv`, tính toán các tỷ lệ thiếu dữ liệu, sai định dạng số điện thoại, viết hoa họ tên và tỷ lệ trùng lặp. | Mục 1 (Phạm vi) và Mục 4 (Bộ quy tắc chất lượng dữ liệu DQ01 – DQ06). | Tự viết và thực thi mã nguồn Python bằng thư viện Pandas trên Jupyter Notebook (`notebooks/01_check_customers.ipynb`), đối chiếu trực tiếp kết quả với số liệu thực tế ($67.037$ dòng, $11.336$ SĐT mã 84, $4.716$ email lặp). |
-| **— Không sử dụng AI —** *(Tự làm hoàn toàn)* | Xác định phạm vi nghiệp vụ L7, phân tích các Actor, viết User Story và xây dựng sơ đồ Use Case. | Mục 1 (Giới thiệu & phạm vi) và Mục 2 (Use Case). | Dựa trên đề cương bài học Buổi 2 và Buổi 4, tự vẽ sơ đồ Use Case trên draw.io và viết đặc tả luồng chính/ngoại lệ. |
+```bash
+# Lần 1: Chạy pipeline
+python -m src.pipeline
 
-**Cam kết liêm chính học thuật:**
-> *"Tôi xác nhận đã đọc, hiểu và chịu trách nhiệm về toàn bộ nội dung nộp."*  
-> **Sinh viên:** Hồ Lê Trung Bảo – **MSSV:** 2374802010030 – **Ngày:** 09/10/2026
+# Kiểm tra số lượng bản ghi sau Lần 1
+python -c "import sqlite3; conn = sqlite3.connect('data/processed/warehouse.db'); print('Lần 1:', [row[0] for row in conn.execute('SELECT COUNT(*) FROM dim_customer UNION ALL SELECT COUNT(*) FROM fact_customer_quality_audit;').fetchall()]); conn.close()"
+
+# Lần 2: Chạy lại pipeline lần thứ hai
+python -m src.pipeline
+
+# Kiểm tra số lượng bản ghi sau Lần 2 (PHẢI TRÙNG KHỚP HOÀN TOÀN với Lần 1)
+python -c "import sqlite3; conn = sqlite3.connect('data/processed/warehouse.db'); print('Lần 2:', [row[0] for row in conn.execute('SELECT COUNT(*) FROM dim_customer UNION ALL SELECT COUNT(*) FROM fact_customer_quality_audit;').fetchall()]); conn.close()"
+```
+
+**Kết quả kiểm chứng thực tế:**
+* `staging_customers`: 67.037 bản ghi (Lần 2 = Lần 1).
+* `reject_rows`: 4.133 bản ghi (Lần 2 = Lần 1).
+* `dim_customer`: 62.904 bản ghi (Lần 2 = Lần 1).
+* `fact_customer_quality_audit`: 62.904 bản ghi (Lần 2 = Lần 1).
+
+---
+
+## 5. Chạy bộ kiểm thử tự động (Unit Tests)
+
+Bộ kiểm thử gồm 11 test cases thuộc đủ **3 loại bắt buộc** (Luồng đúng · Giá trị biên · Dữ liệu sai), kiểm thử tính năng che mặt nạ PII (NFR05) và các phép đo chất lượng:
+
+```bash
+python -m pytest -q
+```
+
+Kết quả: `11 passed` toàn bộ trong dưới 0,2 giây.
+
+---
+
+## 6. Cấu trúc mã nguồn
+
+Cấu trúc thư mục phân tầng ranh giới rõ ràng theo chuẩn Slide Buổi 7 (Track DA):
+
+```text
+smartcrm-2374802010030-customer-data-quality/
+├── configs/
+│   └── config.example.yaml          # Ngưỡng chất lượng DQ (Completeness, Validity...)
+├── data/
+│   ├── raw/customers_raw.csv        # Dữ liệu khách hàng thực tế (67.037 dòng)
+│   ├── mau/customers_sample.csv     # Dữ liệu mẫu nhỏ (300 dòng) phục vụ chạy thử
+│   └── processed/warehouse.db       # Cơ sở dữ liệu SQLite kho Star Schema
+├── docs/
+│   ├── thay-doi-thiet-ke.md         # [BẮT BUỘC] Nhật ký thay đổi thiết kế (khắc phục BT1)
+│   ├── srs.md                       # Bản đặc tả SRS (bổ sung glossary, NFR05, ma trận truy vết)
+│   ├── ai-disclosure.md             # Kê khai AI
+│   └── ...                          # Sơ đồ .drawio và .png
+├── reports/                         # Thư mục lưu trữ báo cáo chất lượng sinh tự động
+│   ├── chat-luong-lo-toan-bo-*.md   # Báo cáo định dạng Markdown
+│   └── chat-luong-lo-toan-bo-*.json # Báo cáo định dạng JSON
+├── sql/                             # DDL tạo bảng cơ sở dữ liệu
+│   ├── 001_staging.sql              # Bảng staging_customers
+│   ├── 002_reject.sql               # Bảng reject_rows & quality_measures
+│   ├── 010_dim.sql                  # Bảng dim_customer, dim_quality_rule, dim_audit_run
+│   └── 020_fact.sql                 # Bảng fact_customer_quality_audit
+├── src/
+│   ├── config.py                    # Nạp ngưỡng cấu hình và đường dẫn dữ liệu
+│   ├── db.py                        # Quản lý kết nối và thực thi DDL kho dữ liệu
+│   ├── extract/
+│   │   └── read_sources.py          # Pha 1: Đọc CSV nguồn nguyên trạng
+│   ├── transform/
+│   │   ├── rules.py                 # Hàm thuần chuẩn hóa SĐT, họ tên, email, PII
+│   │   └── clean_customers.py       # Pha 2: Điều phối làm sạch & gán nhãn reject
+│   ├── quality/
+│   │   └── checks.py                # Pha 3: Đo lường 3 chiều chất lượng trả về số
+│   ├── load/
+│   │   ├── load_staging.py          # Pha 4: Nạp staging, reject và measures
+│   │   └── load_warehouse.py        # Pha 4: Nạp dimension và fact
+│   └── pipeline.py                  # Entrypoint điều phối toàn bộ 4 pha
+├── tests/
+│   ├── conftest.py                  # Fixtures dữ liệu kiểm thử độc lập
+│   ├── test_rules.py                # Test đơn vị hàm thuần (Đúng, Biên, Sai, PII)
+│   └── test_checks.py               # Test đơn vị phép đo chất lượng và bảng reject
+├── .env.example                     # Biến môi trường mẫu
+├── requirements.txt                 # Khóa phiên bản thư viện
+└── README.md                        # Hướng dẫn chi tiết dự án
+```
+
+---
+
+## 7. Bảng đối chiếu tiêu chí kỹ thuật tối thiểu BT2
+
+| Mã tiêu chí | Nội dung tiêu chí kỹ thuật BT2 | Trạng thái đạt được |
+| :---: | :--- | :---: |
+| **C1** | Hệ thống chạy được từ trạng thái ban đầu theo đúng README (CỐT LÕI) | ✅ ĐẠT (`python -m src.pipeline`) |
+| **C2** | Tách lớp đúng: ba lớp ở ba nơi, không gọi chéo sai chiều (CỐT LÕI) | ✅ ĐẠT (`extract` / `transform` / `quality` / `load`) |
+| **C3** | $\ge 2$ quy tắc nghiệp vụ thật, không chỉ lưu và đọc dữ liệu | ✅ ĐẠT (Chuẩn hóa SĐT 4 dạng, họ tên Title Case, phát hiện trùng lặp) |
+| **C4** | $\ge 3$ kiểm thử thuộc 3 loại khác nhau, PASS bằng 1 lệnh (CỐT LÕI) | ✅ ĐẠT (11 tests: Đúng, Biên, Sai, pass bằng `python -m pytest -q`) |
+| **C5** | Chạy lại lần hai không lỗi, không nhân đôi dữ liệu (CỐT LÕI) | ✅ ĐẠT (Số dòng Lần 2 = Lần 1 chính xác 100%) |
+| **C6** | Đã commit tệp khóa phiên bản; `.env.example` đủ biến; `.env` không commit | ✅ ĐẠT (`requirements.txt`, `.env.example` đầy đủ) |
+| **C7** | Dữ liệu vào sai bị từ chối có thông báo rõ ràng, không sập, không lỗi thô | ✅ ĐẠT (4.133 dòng vào `reject_rows` kèm lý do cụ thể) |
+| **D1** | Pipeline một lệnh, ba pha ba nơi | ✅ ĐẠT (`src/pipeline.py`) |
+| **D2** | $\ge 5$ hàm kiểm chất lượng ra số định lượng | ✅ ĐẠT (9 phép đo trả về số dòng và tỷ lệ %) |
+| **D3** | Bảng reject có dòng, lý do viết cho con người | ✅ ĐẠT (Cột `ly_do_loi` diễn giải chi tiết cho người đọc) |

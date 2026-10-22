@@ -1,0 +1,24 @@
+# Cấu hình các ngưỡng chất lượng dữ liệu (Data Quality Thresholds)
+# Luồng L7 — Mekong Mobile: Kiểm tra và làm sạch dữ liệu khách hàng
+
+# 1. Ngưỡng chiều ĐẦY ĐỦ (Completeness) — Đo trên từng cột
+do_day_du:
+  customers.customer_id: 1.00     # Mã định danh bắt buộc 100% không được rỗng
+  customers.ho_ten: 0.98          # Họ tên bắt buộc >= 98%
+  customers.so_dien_thoai: 0.98   # Số điện thoại bắt buộc >= 98%
+  customers.email: 0.50           # Dữ liệu thực tế thiếu 44,99%, ngưỡng chấp nhận tối thiểu 50%
+
+# 2. Ngưỡng chiều CHÍNH XÁC (Validity) — Đo theo quy tắc
+do_chinh_xac:
+  sdt_chuan_hoa_duoc: 0.95        # Tỷ lệ SĐT hợp lệ chuyển được về 10 số (0xxxxxxxxx) >= 95%
+  ho_ten_chuan_hoa_duoc: 0.98     # Tỷ lệ họ tên chuẩn hóa được Title Case >= 98%
+  email_dung_dinh_dang: 0.95      # Tỷ lệ email (nếu có) đúng định dạng RFC 5322 >= 95%
+  ngay_dang_ky_hop_le: 0.98       # Ngày đăng ký hợp lệ và không vượt quá thời gian hiện tại >= 98%
+
+# 3. Ngưỡng chiều NHẤT QUÁN (Uniqueness / Consistency)
+do_nhat_quan:
+  ty_le_sdt_duy_nhat: 0.70        # Thực tế có ~16.000 dòng trùng SĐT, tỷ lệ duy nhất kỳ vọng >= 70%
+
+# 4. Ngưỡng dừng Pipeline (Quality Gates)
+nguong_dung_pipeline:
+  chan_khi_that_bai: false        # True: Dừng không nạp vào Fact/Dim nếu có quy tắc không đạt

@@ -13,6 +13,11 @@ venv/
 
 # Dữ liệu & model lớn
 data/raw/
+data/processed/
+*.db
+reports/*.json
+reports/*.md
+!reports/.gitkeep
 models/*.pkl
 models/*.pt
 
