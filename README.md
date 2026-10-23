@@ -86,19 +86,43 @@ python -c "import sqlite3; conn = sqlite3.connect('data/processed/warehouse.db')
 
 ---
 
-## 5. Chạy bộ kiểm thử tự động (Unit Tests)
+## 5. Dashboard — Biểu đồ phân tích và đối chiếu dòng
 
-Bộ kiểm thử gồm 11 test cases thuộc đủ **3 loại bắt buộc** (Luồng đúng · Giá trị biên · Dữ liệu sai), kiểm thử tính năng che mặt nạ PII (NFR05) và các phép đo chất lượng:
+### 5.1 Đối chiếu số lượng bản ghi staging vs fact
 
 ```bash
-python -m pytest -q
+python -m src.dashboard.so_sanh_dong
 ```
 
-Kết quả: `11 passed` toàn bộ trong dưới 0,2 giây.
+Lệnh này truy vấn kho dữ liệu, đếm số dòng trong từng bảng, và giải thích chênh lệch giữa `staging_customers` (67.037 dòng) và `fact_customer_quality_audit` (62.904 dòng). Chênh lệch 4.133 dòng chính xác bằng số bản ghi trong bảng `reject_rows`.
+
+### 5.2 Tạo biểu đồ phân tích
+
+```bash
+python -m src.dashboard.bieu_do
+```
+
+Tạo 2 biểu đồ lưu tại `docs/`:
+- **Biểu đồ 1** (`bieu_do_loi_dq.png`): Phân bổ lỗi chất lượng theo từng quy tắc DQ — kèm mốc tham chiếu 5% và dòng ghi nguồn dữ liệu.
+- **Biểu đồ 2** (`bieu_do_trung_lap.png`): Tỷ lệ khách hàng trùng lặp vs duy nhất — kèm mốc tham chiếu ngưỡng 70% và thông tin đánh giá.
+
+Hỗ trợ lọc theo khoảng ngày: `python -m src.dashboard.bieu_do --tu-ngay 2025-01-01 --den-ngay 2025-12-31`. Nếu bộ lọc không trả về dữ liệu → hiển thị ảnh placeholder với thông báo giải thích thay vì crash.
 
 ---
 
-## 6. Cấu trúc mã nguồn
+## 6. Chạy bộ kiểm thử tự động (Unit Tests)
+
+Bộ kiểm thử gồm 17 test cases thuộc đủ **3 loại bắt buộc** (Luồng đúng · Giá trị biên · Dữ liệu sai), kiểm thử tính năng che mặt nạ PII (NFR05), phép đo chất lượng và module dashboard:
+
+```bash
+python -m pytest -v
+```
+
+Kết quả: `17 passed` toàn bộ (bao gồm 6 test dashboard mới với test trạng thái rỗng/lỗi).
+
+---
+
+## 7. Cấu trúc mã nguồn
 
 Cấu trúc thư mục phân tầng ranh giới rõ ràng theo chuẩn Slide Buổi 7 (Track DA):
 
@@ -136,11 +160,15 @@ smartcrm-2374802010030-customer-data-quality/
 │   ├── load/
 │   │   ├── load_staging.py          # Pha 4: Nạp staging, reject và measures
 │   │   └── load_warehouse.py        # Pha 4: Nạp dimension và fact
+│   ├── dashboard/
+│   │   ├── so_sanh_dong.py          # Đối chiếu dòng staging vs fact + giải thích
+│   │   └── bieu_do.py               # Tạo 2 biểu đồ phân tích kèm mốc tham chiếu
 │   └── pipeline.py                  # Entrypoint điều phối toàn bộ 4 pha
 ├── tests/
 │   ├── conftest.py                  # Fixtures dữ liệu kiểm thử độc lập
 │   ├── test_rules.py                # Test đơn vị hàm thuần (Đúng, Biên, Sai, PII)
-│   └── test_checks.py               # Test đơn vị phép đo chất lượng và bảng reject
+│   ├── test_checks.py               # Test đơn vị phép đo chất lượng và bảng reject
+│   └── test_dashboard.py            # Test dashboard (đếm dòng, biểu đồ, trạng thái rỗng)
 ├── .env.example                     # Biến môi trường mẫu
 ├── requirements.txt                 # Khóa phiên bản thư viện
 └── README.md                        # Hướng dẫn chi tiết dự án
@@ -148,14 +176,14 @@ smartcrm-2374802010030-customer-data-quality/
 
 ---
 
-## 7. Bảng đối chiếu tiêu chí kỹ thuật tối thiểu BT2
+## 8. Bảng đối chiếu tiêu chí kỹ thuật tối thiểu BT2
 
 | Mã tiêu chí | Nội dung tiêu chí kỹ thuật BT2 | Trạng thái đạt được |
 | :---: | :--- | :---: |
 | **C1** | Hệ thống chạy được từ trạng thái ban đầu theo đúng README (CỐT LÕI) | ✅ ĐẠT (`python -m src.pipeline`) |
 | **C2** | Tách lớp đúng: ba lớp ở ba nơi, không gọi chéo sai chiều (CỐT LÕI) | ✅ ĐẠT (`extract` / `transform` / `quality` / `load`) |
 | **C3** | $\ge 2$ quy tắc nghiệp vụ thật, không chỉ lưu và đọc dữ liệu | ✅ ĐẠT (Chuẩn hóa SĐT 4 dạng, họ tên Title Case, phát hiện trùng lặp) |
-| **C4** | $\ge 3$ kiểm thử thuộc 3 loại khác nhau, PASS bằng 1 lệnh (CỐT LÕI) | ✅ ĐẠT (11 tests: Đúng, Biên, Sai, pass bằng `python -m pytest -q`) |
+| **C4** | $\ge 3$ kiểm thử thuộc 3 loại khác nhau, PASS bằng 1 lệnh (CỐT LÕI) | ✅ ĐẠT (17 tests: Đúng, Biên, Sai, pass bằng `python -m pytest -v`) |
 | **C5** | Chạy lại lần hai không lỗi, không nhân đôi dữ liệu (CỐT LÕI) | ✅ ĐẠT (Số dòng Lần 2 = Lần 1 chính xác 100%) |
 | **C6** | Đã commit tệp khóa phiên bản; `.env.example` đủ biến; `.env` không commit | ✅ ĐẠT (`requirements.txt`, `.env.example` đầy đủ) |
 | **C7** | Dữ liệu vào sai bị từ chối có thông báo rõ ràng, không sập, không lỗi thô | ✅ ĐẠT (4.133 dòng vào `reject_rows` kèm lý do cụ thể) |

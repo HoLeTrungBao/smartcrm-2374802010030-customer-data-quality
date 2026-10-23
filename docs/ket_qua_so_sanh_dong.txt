@@ -1,0 +1,26 @@
+============================================================
+ĐỐI CHIẾU SỐ LƯỢNG BẢN GHI TRONG KHO DỮ LIỆU
+============================================================
+  staging_customers                        :     67,037 dòng
+  reject_rows                              :      4,133 dòng
+  dim_customer                             :     62,904 dòng
+  dim_quality_rule                         :          6 dòng
+  dim_audit_run                            :          1 dòng
+  fact_customer_quality_audit              :     62,904 dòng
+  quality_measures                         :          9 dòng
+------------------------------------------------------------
+- staging_customers: 67,037 bản ghi (toàn bộ dữ liệu thô được giữ nguyên)
+- reject_rows: 4,133 bản ghi (dòng không thể chuẩn hóa, có lý do cụ thể)
+- dim_customer: 62,904 bản ghi (khách hàng đã làm sạch, nạp bằng khóa nghiệp vụ `customer_id`)
+- fact_customer_quality_audit: 62,904 bản ghi (kết quả kiểm định từng khách hàng sạch)
+
+Chênh lệch staging − fact = 4,133 dòng.
+
+Nguyên nhân:
+  1. Có 4,133 bản ghi bị từ chối do không thể chuẩn hóa SĐT, thiếu họ tên, hoặc thiếu mã định danh.
+  2. Các bản ghi này được lưu trong bảng `reject_rows` kèm lý do lỗi cụ thể để nhân viên đối soát.
+  3. Chênh lệch staging − fact (4,133) ≈ reject (4,133) → dữ liệu không bị mất, chỉ được phân luồng.
+============================================================
+
+2026-10-23 14:42:40,514 [INFO] dashboard.so_sanh_dong: === BẮT ĐẦU ĐỐI CHIẾU SỐ LƯỢNG BẢN GHI ===
+2026-10-23 14:42:40,521 [INFO] dashboard.so_sanh_dong: Đã xuất báo cáo đối chiếu dòng tại: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\reports\so-sanh-dong.md

@@ -1,0 +1,21 @@
+2026-10-23 14:42:22,617 [INFO] pipeline: === BẮT ĐẦU CHẠY PIPELINE (Mã lô: lo-toan-bo) ===
+2026-10-23 14:42:22,618 [INFO] pipeline: --- PHA 1: EXTRACT (Trích xuất dữ liệu) ---
+2026-10-23 14:42:22,618 [INFO] extract: Bắt đầu đọc dữ liệu khách hàng thô từ: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\data\raw\customers_raw.csv
+2026-10-23 14:42:22,871 [INFO] extract: Đã đọc thành công 67037 dòng dữ liệu từ tập tin nguồn.
+2026-10-23 14:42:22,871 [INFO] pipeline: --- PHA 2: TRANSFORM (Làm sạch & Gán nhãn lỗi) ---
+2026-10-23 14:42:22,871 [INFO] transform: Bắt đầu xử lý làm sạch tập dữ liệu khách hàng (67037 dòng)...
+2026-10-23 14:42:24,152 [INFO] transform: Làm sạch hoàn tất: 62904 dòng đạt chuẩn, 4133 dòng đưa vào bảng reject.
+2026-10-23 14:42:24,155 [INFO] pipeline: --- PHA 3: QUALITY (Đo lường 3 chiều chất lượng) ---
+2026-10-23 14:42:24,529 [INFO] pipeline: --- PHA 4: LOAD (Nạp vào CSDL kho Star Schema) ---
+2026-10-23 14:42:24,531 [INFO] load.staging: Bắt đầu nạp 67037 bản ghi vào bảng staging_customers cho lô lo-toan-bo...
+2026-10-23 14:42:32,163 [INFO] load.staging: Nạp staging thành công: 67037 dòng.
+2026-10-23 14:42:32,175 [INFO] load.staging: Bắt đầu nạp 4133 dòng từ chối vào bảng reject_rows cho lô lo-toan-bo...
+2026-10-23 14:42:32,660 [INFO] load.staging: Nạp bảng reject thành công: 4133 dòng.
+2026-10-23 14:42:32,661 [INFO] load.staging: Lưu 9 kết quả đo chất lượng vào bảng quality_measures cho lô lo-toan-bo...
+2026-10-23 14:42:32,675 [INFO] load.warehouse: Bắt đầu nạp 62904 khách hàng sạch vào dim_customer...
+2026-10-23 14:42:37,363 [INFO] load.warehouse: Nạp dim_customer hoàn tất. Tổng số khách hàng trong kho: 62904.
+2026-10-23 14:42:37,377 [INFO] load.warehouse: Bắt đầu nạp dữ liệu kiểm định vào bảng Fact cho phiên 1...
+2026-10-23 14:42:40,161 [INFO] load.warehouse: Nạp fact_customer_quality_audit hoàn tất: 62904 dòng.
+2026-10-23 14:42:40,168 [INFO] pipeline: === PIPELINE HOÀN TẤT THÀNH CÔNG ===
+2026-10-23 14:42:40,170 [INFO] pipeline: Đã xuất báo cáo Markdown thành công tại: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\reports\chat-luong-lo-toan-bo-20261023_144222.md
+2026-10-23 14:42:40,180 [INFO] pipeline: Đã xuất báo cáo JSON thành công tại: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\reports\chat-luong-lo-toan-bo-20261023_144222.json

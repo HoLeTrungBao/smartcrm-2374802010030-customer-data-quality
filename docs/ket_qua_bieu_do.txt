@@ -1,0 +1,8 @@
+✅ C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\docs\bieu_do_loi_dq.png
+  ✅ C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\docs\bieu_do_trung_lap.png
+2026-10-23 14:42:41,409 [INFO] dashboard.bieu_do: === BẮT ĐẦU TẠO BIỂU ĐỒ PHÂN TÍCH ===
+2026-10-23 14:42:41,410 [INFO] dashboard.bieu_do: Đang truy vấn dữ liệu từ kho để tạo biểu đồ phân bổ lỗi DQ...
+2026-10-23 14:42:41,625 [INFO] dashboard.bieu_do: Đã lưu biểu đồ phân bổ lỗi DQ tại: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\docs\bieu_do_loi_dq.png
+2026-10-23 14:42:41,626 [INFO] dashboard.bieu_do: Đang truy vấn dữ liệu từ kho để tạo biểu đồ tỷ lệ trùng lặp...
+2026-10-23 14:42:41,865 [INFO] dashboard.bieu_do: Đã lưu biểu đồ tỷ lệ trùng lặp tại: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality\docs\bieu_do_trung_lap.png
+2026-10-23 14:42:41,865 [INFO] dashboard.bieu_do: === ĐÃ TẠO XONG 2 BIỂU ĐỒ ===

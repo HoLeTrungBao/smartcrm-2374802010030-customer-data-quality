@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.1.1, pluggy-1.7.0 -- C:\Python314\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality
+collecting ... collected 17 items
+
+tests/test_checks.py::test_xu_ly_lam_sach_va_reject PASSED               [  5%]
+tests/test_checks.py::test_do_tat_ca_chat_luong PASSED                   [ 11%]
+tests/test_dashboard.py::test_dem_dong_cac_bang PASSED                   [ 17%]
+tests/test_dashboard.py::test_giai_thich_chenh_lech_co_noi_dung PASSED   [ 23%]
+tests/test_dashboard.py::test_bieu_do_loi_dq_tao_file PASSED             [ 29%]
+tests/test_dashboard.py::test_bieu_do_trung_lap_tao_file PASSED          [ 35%]
+tests/test_dashboard.py::test_bieu_do_bo_loc_rong_khong_crash PASSED     [ 41%]
+tests/test_dashboard.py::test_tao_hinh_thong_bao_loi PASSED              [ 47%]
+tests/test_rules.py::test_rong_voi_cac_dang_thieu_thuc_te PASSED         [ 52%]
+tests/test_rules.py::test_sdt_luong_dung PASSED                          [ 58%]
+tests/test_rules.py::test_sdt_gia_tri_bien PASSED                        [ 64%]
+tests/test_rules.py::test_sdt_du_lieu_sai PASSED                         [ 70%]
+tests/test_rules.py::test_ho_ten_luong_dung PASSED                       [ 76%]
+tests/test_rules.py::test_ho_ten_gia_tri_bien PASSED                     [ 82%]
+tests/test_rules.py::test_ho_ten_du_lieu_sai PASSED                      [ 88%]
+tests/test_rules.py::test_doc_ngay_cac_dinh_dang PASSED                  [ 94%]
+tests/test_rules.py::test_che_mat_na_pii PASSED                          [100%]
+
+============================= 17 passed in 1.60s ==============================
