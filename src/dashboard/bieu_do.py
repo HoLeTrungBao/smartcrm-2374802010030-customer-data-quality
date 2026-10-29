@@ -93,10 +93,10 @@ def bieu_do_loi_dq(
         tham_so: list = []
 
         if tu_ngay:
-            dieu_kien.append("ngay_nap >= ?")
+            dieu_kien.append("thoi_gian_tao >= ?")
             tham_so.append(tu_ngay)
         if den_ngay:
-            dieu_kien.append("ngay_nap <= ?")
+            dieu_kien.append("thoi_gian_tao <= ?")
             tham_so.append(den_ngay)
 
         if dieu_kien:
