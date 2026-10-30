@@ -124,7 +124,7 @@ def viet_bao_cao_json(bao_cao: dict, duong_dan: pathlib.Path) -> None:
     log.info("Đã xuất báo cáo JSON thành công tại: %s", duong_dan)
 
 
-def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: bool = False) -> tuple[dict, int]:
+def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: bool = False, xuat_bao_cao: bool = False) -> tuple[dict, int]:
     """Điều phối thực thi toàn bộ pipeline."""
     ma_lo = sinh_ma_lo(tu_ngay, den_ngay)
     dau_thoi_gian = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -137,7 +137,6 @@ def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: boo
     }
 
     thu_muc_bao_cao = config.duong_dan_bao_cao()
-    thu_muc_bao_cao.mkdir(parents=True, exist_ok=True)
     ma_thoat = 0
 
     try:
@@ -245,11 +244,13 @@ def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: boo
         bao_cao['loi'] = str(e)
         ma_thoat = 1
     finally:
-        # Luôn xuất báo cáo ra đĩa kể cả khi có lỗi xảy ra
-        tep_md = thu_muc_bao_cao / f"chat-luong-{ma_lo}-{dau_thoi_gian}.md"
-        tep_json = thu_muc_bao_cao / f"chat-luong-{ma_lo}-{dau_thoi_gian}.json"
-        viet_bao_cao_md(bao_cao, tep_md)
-        viet_bao_cao_json(bao_cao, tep_json)
+        # Chỉ xuất báo cáo ra đĩa khi có cờ --xuat-bao-cao
+        if xuat_bao_cao:
+            thu_muc_bao_cao.mkdir(parents=True, exist_ok=True)
+            tep_md = thu_muc_bao_cao / f"chat-luong-{ma_lo}-{dau_thoi_gian}.md"
+            tep_json = thu_muc_bao_cao / f"chat-luong-{ma_lo}-{dau_thoi_gian}.json"
+            viet_bao_cao_md(bao_cao, tep_md)
+            viet_bao_cao_json(bao_cao, tep_json)
 
     return bao_cao, ma_thoat
 
@@ -260,12 +261,14 @@ if __name__ == '__main__':
     parser.add_argument('--den-ngay', help="Ngày kết thúc phạm vi lọc dữ liệu (YYYY-MM-DD)")
     parser.add_argument('--chi-kiem', action='store_true', help="Chỉ đo lường chất lượng, không nạp vào CSDL kho")
     parser.add_argument('--khoi-tao-db', action='store_true', help="Khởi tạo hoặc tạo lại cấu trúc bảng trong CSDL")
+    parser.add_argument('--xuat-bao-cao', action='store_true', help="Tùy chọn xuất báo cáo markdown/json ra thư mục reports/")
 
     args = parser.parse_args()
     _, exit_code = chay(
         tu_ngay=args.tu_ngay,
         den_ngay=args.den_ngay,
         chi_kiem=args.chi_kiem,
-        khoi_tao_csdl=args.khoi_tao_db
+        khoi_tao_csdl=args.khoi_tao_db,
+        xuat_bao_cao=args.xuat_bao_cao
     )
     sys.exit(exit_code)
