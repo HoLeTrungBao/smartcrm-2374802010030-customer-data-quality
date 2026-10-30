@@ -1,12 +1,15 @@
 """Mô-đun quản lý cấu hình và ngưỡng chất lượng dữ liệu."""
 import os
 import pathlib
+import logging
 import yaml
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
     pass
+
+log = logging.getLogger('config')
 
 GOC = pathlib.Path(__file__).resolve().parent.parent
 
@@ -44,8 +47,8 @@ def nap_nguong(duong_dan_yaml: pathlib.Path | None = None) -> dict:
                 cau_hinh = yaml.safe_load(f)
                 if isinstance(cau_hinh, dict):
                     return cau_hinh
-        except Exception:
-            pass
+        except Exception as e:
+            log.warning("Không thể đọc tệp cấu hình %s (%s). Sử dụng ngưỡng mặc định.", duong_dan_yaml, e)
     return NGUONG_MAC_DINH
 
 

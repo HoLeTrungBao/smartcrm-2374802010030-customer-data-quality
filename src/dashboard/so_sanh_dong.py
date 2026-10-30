@@ -29,7 +29,8 @@ def dem_dong_cac_bang(conn: sqlite3.Connection) -> dict[str, int]:
         try:
             cur = conn.execute(f"SELECT COUNT(*) AS cnt FROM {bang};")
             ket_qua[bang] = cur.fetchone()['cnt']
-        except Exception:
+        except Exception as e:
+            log.warning("Bảng %s chưa tồn tại hoặc lỗi truy vấn: %s", bang, e)
             ket_qua[bang] = -1  # Bảng chưa tồn tại
     return ket_qua
 
