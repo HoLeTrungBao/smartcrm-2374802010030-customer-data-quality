@@ -15,6 +15,7 @@ Tài liệu này ghi nhận các lỗi kỹ thuật phát hiện được trong 
    - Nếu chưa tồn tại: thực hiện `INSERT` mới.
    Đồng thời trong `nap_fact_quality`, xóa sạch các dòng fact cũ của cùng `run_key` trước khi nạp lại.
 6. **Xác nhận:** Chạy lại pipeline 3 lần liên tiếp, số lượng bản ghi trong toàn bộ 4 bảng (`staging_customers`, `reject_rows`, `dim_customer`, `fact_customer_quality_audit`) hoàn toàn giữ nguyên, không lỗi Foreign Key &rarr; **PASS**.
+7. **Commit khắc phục:** [Commit 94c9c9d](https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality/commit/94c9c9d)
 
 ---
 
@@ -29,6 +30,7 @@ Tài liệu này ghi nhận các lỗi kỹ thuật phát hiện được trong 
    - `cot_ngay = 'ngay_dang_ky' if 'ngay_dang_ky' in df.columns else 'ngay_tao'`
    Sau đó chuẩn hóa thống nhất về `customer_id` và `ngay_dang_ky` trước khi chuyển sang các pha sau.
 6. **Xác nhận:** Chạy thành công toàn bộ 67.037 dòng từ file CSV thật không còn gặp lỗi `KeyError` &rarr; **PASS**.
+7. **Commit khắc phục:** [Commit 94c9c9d](https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality/commit/94c9c9d)
 
 ---
 
@@ -40,3 +42,4 @@ Tài liệu này ghi nhận các lỗi kỹ thuật phát hiện được trong 
 4. **Nguyên nhân:** Trong câu lệnh SQL truy vấn bảng `reject_rows`, mã nguồn gọi cột `ngay_nap`, trong khi định nghĩa DDL tại `sql/002_reject.sql` đặt tên cột thời gian là `thoi_gian_tao`.
 5. **Cách sửa:** Sửa lại tên cột trong câu truy vấn tại `src/dashboard/bieu_do.py` từ `ngay_nap` thành `thoi_gian_tao`.
 6. **Xác nhận:** Chạy lại hàm vẽ biểu đồ với bộ lọc ngày tương lai, hệ thống tự động sinh ảnh placeholder trạng thái rỗng `docs/trang_thai_rong_bieu_do.png` mà không hề crash &rarr; **PASS**.
+7. **Commit khắc phục:** [Commit 3e3da6a](https://github.com/HoLeTrungBao/smartcrm-2374802010030-customer-data-quality/commit/3e3da6a)

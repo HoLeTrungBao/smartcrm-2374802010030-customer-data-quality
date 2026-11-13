@@ -1,0 +1,39 @@
+name: CI Pipeline & Quality Checks (Track DA)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Kiểm thử tự động & Đối soát dữ liệu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Thiết lập môi trường Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Cài đặt các gói phụ thuộc
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Chạy toàn bộ 20 bài kiểm thử đơn vị & hồi quy (Pytest)
+        run: |
+          python -m pytest -v
+
+      - name: Chạy thử nghiệm Pipeline trên dữ liệu mẫu
+        run: |
+          python -m src.pipeline --file-nguon data/mau/customers_sample.csv
+
+      - name: Đối soát số dòng Staging vs Fact vs Reject
+        run: |
+          python -m src.dashboard.so_sanh_dong

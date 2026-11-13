@@ -74,3 +74,19 @@ Mỗi thay đổi được cấu trúc chặt chẽ theo 3 thành phần: **Thay
 - **Thay đổi gì:** Bổ sung bảng `reject_rows` (lưu trữ các dòng không thể tự động sửa kèm lý do viết cho con người đọc) và bảng `quality_measures` (lưu kết quả định lượng của từng phép đo chất lượng qua các phiên chạy).
 - **Vì sao:** Đảm bảo nguyên tắc *"không nuốt lỗi âm thầm"* và đáp ứng trực tiếp tiêu chí D3 của BT2 (*"Bảng reject có dòng, lý do viết cho người"*).
 - **Ảnh hưởng:** `sql/002_reject.sql`, `src/load/load_staging.py`, `src/quality/checks.py`.
+
+---
+
+## 9. Tách biệt tính năng xuất báo cáo thành tùy chọn `--xuat-bao-cao`
+
+- **Thay đổi gì:** Tách biệt tính năng tự động xuất tệp báo cáo tổng hợp Markdown (`docs/bao_cao_pipeline.md`) thành một tùy chọn riêng thông qua cờ dòng lệnh `--xuat-bao-cao` (mặc định không tự động ghi file khi chạy pipeline thông thường).
+- **Vì sao:** Tránh việc ghi đè tệp báo cáo không kiểm soát trong các lượt chạy kiểm thử tự động (Unit Test / CI) hoặc nạp dữ liệu định kỳ, tối ưu hóa tốc độ thực thi pipeline và trao quyền chủ động cho kỹ sư phân tích dữ liệu khi cần xuất tài liệu đối soát.
+- **Ảnh hưởng:** `src/pipeline.py` (bổ sung tham số `argparse`), `README.md`, tài liệu hướng dẫn vận hành pipeline.
+
+---
+
+## 10. Chuẩn hóa và đồng bộ sơ đồ kiến trúc 4 pha nền tối (Dark Theme)
+
+- **Thay đổi gì:** Cập nhật và đồng bộ toàn bộ sơ đồ kiến trúc hệ thống 4 pha (`1. Extract` &rarr; `2. Transform` &rarr; `3. Quality` &rarr; `4. Load`) thành hình ảnh chuẩn hóa cao cấp nền tối (`docs/architecture.png`), thể hiện rõ ràng luồng tách nhánh giữa bảng dữ liệu sạch (`dim_customer`, `fact_customer_quality_audit`), bảng cách ly lỗi (`reject_rows`) và tầng báo cáo trực quan Dashboard.
+- **Vì sao:** Đảm bảo tính nhất quán thẩm mỹ với các biểu đồ phân tích chất lượng dữ liệu (vốn tuân thủ phong cách Dark Theme chuyên nghiệp), đồng thời giúp hội đồng đánh giá dễ dàng nhận diện luồng xử lý dữ liệu và trách nhiệm của từng module mã nguồn trong kho dữ liệu Star Schema.
+- **Ảnh hưởng:** `docs/architecture.png`, `README.md`, các báo cáo định kỳ và tài liệu nghiệm thu đề tài.
