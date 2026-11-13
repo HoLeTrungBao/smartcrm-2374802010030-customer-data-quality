@@ -124,7 +124,7 @@ def viet_bao_cao_json(bao_cao: dict, duong_dan: pathlib.Path) -> None:
     log.info("Đã xuất báo cáo JSON thành công tại: %s", duong_dan)
 
 
-def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: bool = False, xuat_bao_cao: bool = False) -> tuple[dict, int]:
+def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: bool = False, xuat_bao_cao: bool = False, file_nguon: str | None = None) -> tuple[dict, int]:
     """Điều phối thực thi toàn bộ pipeline."""
     ma_lo = sinh_ma_lo(tu_ngay, den_ngay)
     dau_thoi_gian = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -151,7 +151,7 @@ def chay(tu_ngay=None, den_ngay=None, chi_kiem: bool = False, khoi_tao_csdl: boo
 
         # ---------- PHA 1: EXTRACT ----------
         log.info("--- PHA 1: EXTRACT (Trích xuất dữ liệu) ---")
-        nguon = read_sources.doc_tat_ca(thu_muc_du_lieu)
+        nguon = read_sources.doc_tat_ca(thu_muc_du_lieu, tep_nguon=file_nguon)
         df_khach_hang_tho = nguon['customers']
         bao_cao['cac_pha'].append({
             'pha': 'EXTRACT',
@@ -262,6 +262,7 @@ if __name__ == '__main__':
     parser.add_argument('--chi-kiem', action='store_true', help="Chỉ đo lường chất lượng, không nạp vào CSDL kho")
     parser.add_argument('--khoi-tao-db', action='store_true', help="Khởi tạo hoặc tạo lại cấu trúc bảng trong CSDL")
     parser.add_argument('--xuat-bao-cao', action='store_true', help="Tùy chọn xuất báo cáo markdown/json ra thư mục reports/")
+    parser.add_argument('--file-nguon', help="Đường dẫn trực tiếp đến tập tin CSV nguồn cần xử lý (VD: data/mau/customers_sample.csv)")
 
     args = parser.parse_args()
     _, exit_code = chay(
@@ -269,6 +270,7 @@ if __name__ == '__main__':
         den_ngay=args.den_ngay,
         chi_kiem=args.chi_kiem,
         khoi_tao_csdl=args.khoi_tao_db,
-        xuat_bao_cao=args.xuat_bao_cao
+        xuat_bao_cao=args.xuat_bao_cao,
+        file_nguon=args.file_nguon
     )
     sys.exit(exit_code)

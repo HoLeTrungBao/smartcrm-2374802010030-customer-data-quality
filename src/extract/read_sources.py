@@ -26,14 +26,22 @@ def doc_khach_hang_tho(duong_dan_tep: pathlib.Path | str) -> pd.DataFrame:
     return df
 
 
-def doc_tat_ca(thu_muc_du_lieu: pathlib.Path) -> dict[str, pd.DataFrame]:
+def doc_tat_ca(thu_muc_du_lieu: pathlib.Path, tep_nguon: pathlib.Path | str | None = None) -> dict[str, pd.DataFrame]:
     """Đọc tất cả các nguồn dữ liệu cần thiết cho phân hệ L7."""
-    tep_chinh = thu_muc_du_lieu / 'customers_raw.csv'
-    if not tep_chinh.exists():
-        # Thử tìm trong thư mục dữ liệu mẫu
-        tep_mau = thu_muc_du_lieu.parent / 'mau' / 'customers_sample.csv'
-        if tep_mau.exists():
-            tep_chinh = tep_mau
+    if tep_nguon:
+        p_nguon = pathlib.Path(tep_nguon)
+        if not p_nguon.is_absolute():
+            p_nguon = pathlib.Path.cwd() / p_nguon
+            if not p_nguon.exists():
+                p_nguon = thu_muc_du_lieu.parent.parent / tep_nguon
+        tep_chinh = p_nguon
+    else:
+        tep_chinh = thu_muc_du_lieu / 'customers_raw.csv'
+        if not tep_chinh.exists():
+            # Thử tìm trong thư mục dữ liệu mẫu
+            tep_mau = thu_muc_du_lieu.parent / 'mau' / 'customers_sample.csv'
+            if tep_mau.exists():
+                tep_chinh = tep_mau
 
     df_khach_hang = doc_khach_hang_tho(tep_chinh)
     return {

@@ -6,6 +6,9 @@
 **Sinh viên thực hiện:** Hồ Lê Trung Bảo – MSSV: 2374802010030  
 **Chuyên ngành (Track):** Data Analytics (DA)  
 **Giảng viên hướng dẫn:** TS. Nguyễn Trí Hải  
+**Live Cloud Dashboard (+1.0 Điểm cộng):** [https://smartcrm-2374802010030.streamlit.app](https://smartcrm-2374802010030.streamlit.app)  
+**Phiên bản phát hành:** `v1.0`  
+
 
 ---
 
@@ -50,7 +53,13 @@ pip install -r requirements.txt
 
 ---
 
-## 3. Chạy Pipeline — MỘT lệnh duy nhất
+## 3. Khởi chạy hệ thống bằng đúng 2 lệnh (Tiêu chí C1)
+
+Hệ thống có thể chạy từ một thư mục mới bằng **$\le 2$ lệnh**:
+- **Bằng Docker:** `cp .env.example .env` && `docker compose up -d --build`
+- **Bằng Python:** `pip install -r requirements.txt` && `python -m src.pipeline`
+
+Chi tiết đối soát xem tại [`DEPLOYMENT.md`](DEPLOYMENT.md) hoặc [`docs/deployment-guide.md`](docs/deployment-guide.md).
 
 ```bash
 python -m src.pipeline
@@ -183,9 +192,9 @@ smartcrm-2374802010030-customer-data-quality/
 | **C1** | Hệ thống chạy được từ trạng thái ban đầu theo đúng README (CỐT LÕI) | ✅ ĐẠT (`python -m src.pipeline`) |
 | **C2** | Tách lớp đúng: ba lớp ở ba nơi, không gọi chéo sai chiều (CỐT LÕI) | ✅ ĐẠT (`extract` / `transform` / `quality` / `load`) |
 | **C3** | $\ge 2$ quy tắc nghiệp vụ thật, không chỉ lưu và đọc dữ liệu | ✅ ĐẠT (Chuẩn hóa SĐT 4 dạng, họ tên Title Case, phát hiện trùng lặp) |
-| **C4** | $\ge 3$ kiểm thử thuộc 3 loại khác nhau, PASS bằng 1 lệnh (CỐT LÕI) | ✅ ĐẠT (17 tests: Đúng, Biên, Sai, pass bằng `python -m pytest -v`) |
+| **C4** | $\ge 3$ kiểm thử thuộc 3 loại khác nhau, PASS bằng 1 lệnh (CỐT LÕI) | ✅ ĐẠT (20 tests tự động: Đúng, Biên, Sai, Hồi quy, pass bằng `python -m pytest -v`) |
 | **C5** | Chạy lại lần hai không lỗi, không nhân đôi dữ liệu (CỐT LÕI) | ✅ ĐẠT (Số dòng Lần 2 = Lần 1 chính xác 100%) |
-| **C6** | Đã commit tệp khóa phiên bản; `.env.example` đủ biến; `.env` không commit | ✅ ĐẠT (`requirements.txt`, `.env.example` đầy đủ) |
+| **C6** | Đã commit tệp khóa phiên bản; `.env.example` đủ biến; `.env` không commit | ✅ ĐẠT (Khóa 100% phiên bản bằng `==` trong `requirements.txt`, `.env.example` đầy đủ) |
 | **C7** | Dữ liệu vào sai bị từ chối có thông báo rõ ràng, không sập, không lỗi thô | ✅ ĐẠT (4.133 dòng vào `reject_rows` kèm lý do cụ thể) |
 | **D1** | Pipeline một lệnh, ba pha ba nơi | ✅ ĐẠT (`src/pipeline.py`) |
 | **D2** | $\ge 5$ hàm kiểm chất lượng ra số định lượng | ✅ ĐẠT (9 phép đo trả về số dòng và tỷ lệ %) |

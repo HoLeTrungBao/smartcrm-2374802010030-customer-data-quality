@@ -87,6 +87,20 @@ Mỗi thay đổi được cấu trúc chặt chẽ theo 3 thành phần: **Thay
 
 ## 10. Chuẩn hóa và đồng bộ sơ đồ kiến trúc 4 pha nền tối (Dark Theme)
 
-- **Thay đổi gì:** Cập nhật và đồng bộ toàn bộ sơ đồ kiến trúc hệ thống 4 pha (`1. Extract` &rarr; `2. Transform` &rarr; `3. Quality` &rarr; `4. Load`) thành hình ảnh chuẩn hóa cao cấp nền tối (`docs/architecture.png`), thể hiện rõ ràng luồng tách nhánh giữa bảng dữ liệu sạch (`dim_customer`, `fact_customer_quality_audit`), bảng cách ly lỗi (`reject_rows`) và tầng báo cáo trực quan Dashboard.
-- **Vì sao:** Đảm bảo tính nhất quán thẩm mỹ với các biểu đồ phân tích chất lượng dữ liệu (vốn tuân thủ phong cách Dark Theme chuyên nghiệp), đồng thời giúp hội đồng đánh giá dễ dàng nhận diện luồng xử lý dữ liệu và trách nhiệm của từng module mã nguồn trong kho dữ liệu Star Schema.
+- **Thay đổi gì:** Cập nhật và đồng bộ toàn bộ sơ đồ kiến trúc hệ thống 4 pha (`1. Extract` &rarr; `2. Transform` &rarr; `3. Quality` &rarr; `4. Load`) thành hình ảnh chuẩn hóa nền tối (`docs/architecture.png`), thể hiện rõ ràng luồng tách nhánh giữa bảng dữ liệu sạch (`dim_customer`, `fact_customer_quality_audit`), bảng cách ly lỗi (`reject_rows`) và tầng báo cáo trực quan Dashboard.
+- **Vì sao:** Đảm bảo tính nhất quán thẩm mỹ với các biểu đồ phân tích chất lượng dữ liệu (vốn tuân thủ phong cách Dark Theme), đồng thời giúp người đọc dễ dàng nhận diện luồng xử lý dữ liệu và trách nhiệm của từng module mã nguồn trong kho dữ liệu Star Schema.
 - **Ảnh hưởng:** `docs/architecture.png`, `README.md`, các báo cáo định kỳ và tài liệu nghiệm thu đề tài.
+
+---
+
+## 11. Khóa cứng toàn bộ phiên bản thư viện bằng toán tử `==` trong requirements.txt
+
+- **Thay đổi gì:** Chuyển đổi toàn bộ các khai báo phụ thuộc trong `requirements.txt` từ dạng toán tử nới lỏng (`>=`) sang khóa cứng phiên bản bằng toán tử tuyệt đối (`==`):
+  - `pandas==2.2.2`
+  - `numpy==1.26.4`
+  - `pyyaml==6.0.2`
+  - `python-dotenv==1.0.1`
+  - `pytest==8.3.3`
+  - `matplotlib==3.9.2`
+- **Vì sao:** Khắc phục trực tiếp nhận xét của Giảng viên sau Bài tập 2 (*"requirements.txt chưa khoá toàn bộ phiên bản bằng '==' (C6)"*). Việc khóa cứng phiên bản bảo đảm môi trường thực thi và kiểm thử đạt tính tái lập (reproducibility) cao, ngăn chặn hoàn toàn rủi ro xung đột khi các thư viện tự động nâng cấp phiên bản không tương thích.
+- **Ảnh hưởng:** `requirements.txt`, `DEPLOYMENT.md`, `README.md`.

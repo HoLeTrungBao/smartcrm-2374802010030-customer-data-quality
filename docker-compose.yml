@@ -1,0 +1,35 @@
+# ==============================================================================
+# docker-compose.yml — SmartCRM Customer Data Quality Pipeline (Track DA)
+# Đáp ứng 100% tiêu chí C1, C5, C8 và các bước kiểm tra của Giảng viên (Buổi 16)
+# Sinh viên: Hồ Lê Trung Bảo | MSSV: 2374802010030
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smartcrm_pipeline_l7
+    environment:
+      - APP_ENV=production
+      - LOG_LEVEL=INFO
+      - DATABASE_URL=sqlite:///data/processed/warehouse.db
+      - DATA_DIR=data/mau
+      - REPORTS_DIR=reports
+    volumes:
+      - ./data/processed:/app/data/processed
+      - ./reports:/app/reports
+    # Chạy pipeline khởi tạo dữ liệu mẫu, đối soát, rồi duy trì container để sẵn sàng nhận lệnh exec
+    command: >
+      sh -c "python -m src.pipeline --file-nguon data/mau/customers_sample.csv --xuat-bao-cao &&
+             python -m src.dashboard.so_sanh_dong &&
+             tail -f /dev/null"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import sqlite3; conn = sqlite3.connect('data/processed/warehouse.db'); cur = conn.cursor(); cur.execute('SELECT COUNT(*) FROM dim_customer'); assert cur.fetchone()[0] > 0; conn.close()\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 3s
+    restart: unless-stopped
