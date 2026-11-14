@@ -5,7 +5,7 @@
 **Luồng nghiệp vụ:** L7 – Kiểm tra và làm sạch dữ liệu khách hàng (*Customer Data Quality*)  
 **Sinh viên thực hiện:** Hồ Lê Trung Bảo – MSSV: 2374802010030  
 **Chuyên ngành (Track):** Data Analytics (DA)  
-**Giảng viên hướng dẫn:** TS. Nguyễn Trí Hải  
+**Giảng viên hướng dẫn:** ThS. Nguyễn Minh Tân  
 **Live Cloud Dashboard (+1.0 Điểm cộng):** [https://smartcrm-2374802010030.streamlit.app](https://smartcrm-2374802010030.streamlit.app)  
 **Phiên bản phát hành:** `v1.0`  
 

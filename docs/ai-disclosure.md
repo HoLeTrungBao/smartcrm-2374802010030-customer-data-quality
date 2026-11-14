@@ -1,6 +1,6 @@
 # PHỤ LỤC: BẢNG KHAI BÁO SỬ DỤNG CÔNG CỤ AI
 
-**Học phần:** Chuyên đề Tốt nghiệp 1 (71ITGR40203) — Giảng viên hướng dẫn: TS. Nguyễn Trí Hải  
+**Học phần:** Chuyên đề Tốt nghiệp 1 (71ITGR40203) — Giảng viên hướng dẫn: ThS. Nguyễn Minh Tân  
 **Sinh viên thực hiện:** Hồ Lê Trung Bảo — **MSSV:** 2374802010030  
 **Chuyên ngành:** Data Analytics (DA) · **Luồng nghiệp vụ:** L7 – Customer Data Quality  
 **Phiên bản phát hành:** `v1.0`

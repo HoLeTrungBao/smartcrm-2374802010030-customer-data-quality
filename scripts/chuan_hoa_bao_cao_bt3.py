@@ -371,7 +371,7 @@ html_content = f"""<!DOCTYPE html>
         </tr>
         <tr>
           <td class="lbl">Giảng viên hướng dẫn:</td>
-          <td class="val">TS. Nguyễn Trí Hải</td>
+          <td class="val">ThS. Nguyễn Minh Tân</td>
         </tr>
         <tr>
           <td class="lbl">Sinh viên thực hiện:</td>
