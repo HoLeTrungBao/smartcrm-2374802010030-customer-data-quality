@@ -3,16 +3,14 @@
 Script tạo Slide thuyết trình Xu hướng công nghệ (Buổi 18) chuẩn 6 trang
 Chuyên đề Tốt nghiệp 1 (71ITGR40203) - Khoa CNTT, Trường Đại học Văn Lang
 Sinh viên: Hồ Lê Trung Bảo - MSSV: 2374802010030 - Track: DA
-Chủ đề: ELT thay cho ETL (Chuyển đổi mô hình xử lý dữ liệu với Modern Data Stack)
+Chủ đề: Xu hướng ELT trong xử lý dữ liệu và đánh giá áp dụng cho SmartCRM
 Tên file xuất: 2374802010030_HoLeTrungBao_DA_XuHuong.pdf
 """
 
 import os
 import subprocess
-import base64
 
 ROOT_DIR = r"C:\Users\ASUS\smartcrm-2374802010030-customer-data-quality"
-DOCS_DIR = os.path.join(ROOT_DIR, "docs")
 OUTPUT_PDF = os.path.join(ROOT_DIR, "2374802010030_HoLeTrungBao_DA_XuHuong.pdf")
 TEMP_HTML = os.path.join(ROOT_DIR, "slide_xuhuong_elt_tam.html")
 
@@ -61,20 +59,20 @@ html_content = f"""<!DOCTYPE html>
   .slide-category {{
     font-size: 8.5pt;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     color: #38BDF8;
-    margin-bottom: 2mm;
+    margin-bottom: 1.5mm;
   }}
   .slide-title {{
-    font-size: 18.5pt;
-    font-weight: 800;
+    font-size: 17.5pt;
+    font-weight: 700;
     color: #FFFFFF;
     line-height: 1.25;
     margin: 0;
   }}
   .slide-subtitle {{
-    font-size: 10.5pt;
+    font-size: 10pt;
     color: #94A3B8;
     margin-top: 1.5mm;
   }}
@@ -94,7 +92,7 @@ html_content = f"""<!DOCTYPE html>
     color: #94A3B8;
   }}
 
-  /* CARDS GRID LAYOUT */
+  /* GRID LAYOUTS */
   .grid-3 {{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -109,6 +107,8 @@ html_content = f"""<!DOCTYPE html>
     flex: 1;
     margin-bottom: 4mm;
   }}
+
+  /* CARDS */
   .card {{
     background-color: #1E293B;
     border: 1px solid #334155;
@@ -117,58 +117,36 @@ html_content = f"""<!DOCTYPE html>
     display: flex;
     flex-direction: column;
   }}
-  .card-highlight {{
-    border-left: 4px solid #38BDF8;
-    background-color: #1E293B;
-  }}
-  .card-danger {{
-    border-left: 4px solid #EF4444;
-    background-color: #1E293B;
-  }}
-  .card-success {{
-    border-left: 4px solid #10B981;
-    background-color: #1E293B;
+  .card-blue {{
+    border-top: 3px solid #38BDF8;
   }}
   .card-amber {{
-    border-left: 4px solid #F59E0B;
-    background-color: #1E293B;
+    border-top: 3px solid #F59E0B;
+  }}
+  .card-slate {{
+    border-top: 3px solid #64748B;
+  }}
+  .card-emerald {{
+    border-top: 3px solid #10B981;
   }}
   .card-title {{
-    font-size: 11pt;
+    font-size: 10.5pt;
     font-weight: 700;
     color: #F8FAFC;
     margin-bottom: 3mm;
-    display: flex;
-    align-items: center;
-    gap: 2mm;
   }}
   .card-content {{
     font-size: 9pt;
-    line-height: 1.45;
+    line-height: 1.5;
     color: #CBD5E1;
     flex: 1;
   }}
   .card-content ul {{
     margin: 0;
-    padding-left: 4mm;
+    padding-left: 4.5mm;
   }}
   .card-content li {{
     margin-bottom: 2mm;
-  }}
-
-  /* HIGHLIGHT CALLOUT */
-  .callout-box {{
-    background-color: #1E293B;
-    border: 1px solid #38BDF8;
-    border-radius: 6px;
-    padding: 3.5mm 5mm;
-    font-size: 9pt;
-    line-height: 1.4;
-    color: #F8FAFC;
-    margin-bottom: 4mm;
-  }}
-  .callout-box strong {{
-    color: #38BDF8;
   }}
 
   /* COMPARISON BOX */
@@ -182,29 +160,61 @@ html_content = f"""<!DOCTYPE html>
   .compare-item {{
     background-color: #1E293B;
     border-radius: 6px;
-    padding: 4mm 5mm;
+    padding: 4.5mm 5.5mm;
     border: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }}
-  .compare-item.old {{
-    border-top: 4px solid #94A3B8;
+  .compare-item.etl {{
+    border-top: 3.5px solid #94A3B8;
   }}
-  .compare-item.new {{
-    border-top: 4px solid #38BDF8;
+  .compare-item.elt {{
+    border-top: 3.5px solid #38BDF8;
   }}
   .compare-header {{
-    font-size: 11.5pt;
-    font-weight: 800;
-    margin-bottom: 2mm;
+    font-size: 11pt;
+    font-weight: 700;
+    margin-bottom: 2.5mm;
   }}
-  .compare-header.old-title {{ color: #94A3B8; }}
-  .compare-header.new-title {{ color: #38BDF8; }}
+  .compare-header.etl-title {{ color: #CBD5E1; }}
+  .compare-header.elt-title {{ color: #38BDF8; }}
+
+  .diagram-flow {{
+    background-color: #0F172A;
+    padding: 2.5mm 3.5mm;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    font-size: 8.5pt;
+    color: #94A3B8;
+    margin-top: 3mm;
+  }}
+  .diagram-flow.active {{
+    color: #38BDF8;
+  }}
+
+  /* HIGHLIGHT CALLOUT */
+  .callout-box {{
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    border-left: 4px solid #38BDF8;
+    border-radius: 6px;
+    padding: 3.5mm 5mm;
+    font-size: 9pt;
+    line-height: 1.45;
+    color: #E2E8F0;
+    margin-bottom: 4mm;
+  }}
+  .callout-box strong {{
+    color: #38BDF8;
+  }}
 
   /* TABLE STYLES */
   table.ref-table {{
     width: 100%;
     border-collapse: collapse;
     font-size: 8.5pt;
-    margin-bottom: 3mm;
+    margin-bottom: 3.5mm;
   }}
   table.ref-table th, table.ref-table td {{
     border: 1px solid #334155;
@@ -216,93 +226,83 @@ html_content = f"""<!DOCTYPE html>
     background-color: #0F172A;
     color: #38BDF8;
     font-weight: 700;
-    text-transform: uppercase;
     font-size: 8pt;
     letter-spacing: 0.5px;
   }}
   table.ref-table td {{
     background-color: #1E293B;
     color: #CBD5E1;
-    line-height: 1.4;
+    line-height: 1.45;
   }}
   table.ref-table tr:nth-child(even) td {{
-    background-color: #172554;
+    background-color: #162032;
   }}
 
-  /* TRANG BÌA (SLIDE 1) */
+  /* COVER SLIDE */
   .cover-slide {{
-    background: radial-gradient(circle at 80% 20%, #1E3A8A 0%, #0F172A 70%);
+    background: radial-gradient(circle at 85% 20%, #1E293B 0%, #0F172A 70%);
     justify-content: center;
     align-items: flex-start;
     padding: 20mm 24mm;
   }}
   .cover-badge {{
-    background-color: rgba(56, 189, 248, 0.15);
+    background-color: rgba(56, 189, 248, 0.12);
     border: 1px solid #38BDF8;
     color: #38BDF8;
-    font-size: 9pt;
+    font-size: 8.5pt;
     font-weight: 700;
-    padding: 2mm 5mm;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    padding: 1.8mm 4.5mm;
+    border-radius: 16px;
+    letter-spacing: 1.2px;
     margin-bottom: 6mm;
     display: inline-block;
   }}
   .cover-main-h1 {{
-    font-size: 26pt;
-    font-weight: 900;
+    font-size: 25pt;
+    font-weight: 800;
     color: #FFFFFF;
     line-height: 1.2;
     margin: 0 0 3mm 0;
   }}
   .cover-main-sub {{
-    font-size: 14pt;
+    font-size: 13pt;
     font-weight: 600;
-    color: #F59E0B;
-    margin: 0 0 8mm 0;
+    color: #38BDF8;
+    margin: 0 0 7mm 0;
   }}
   .cover-desc {{
-    font-size: 10.5pt;
+    font-size: 10pt;
     color: #94A3B8;
-    line-height: 1.5;
-    max-width: 200mm;
-    margin-bottom: 10mm;
+    line-height: 1.55;
+    max-width: 195mm;
+    margin-bottom: 9mm;
   }}
   .cover-meta {{
     border-top: 1px solid #334155;
     padding-top: 5mm;
     display: flex;
     gap: 15mm;
-    font-size: 9.5pt;
+    font-size: 9pt;
     color: #E2E8F0;
   }}
   .cover-meta-item strong {{
     color: #38BDF8;
     display: block;
-    font-size: 8pt;
+    font-size: 7.5pt;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     margin-bottom: 1mm;
   }}
 
-  .badge-stat {{
-    background-color: rgba(239, 68, 68, 0.2);
-    border: 1px solid #EF4444;
-    color: #FCA5A5;
-    padding: 0.8mm 2mm;
+  .tag-info {{
+    display: inline-block;
+    padding: 0.6mm 2mm;
     border-radius: 4px;
-    font-weight: 700;
-    font-size: 8pt;
-  }}
-  .badge-green {{
-    background-color: rgba(16, 185, 129, 0.2);
-    border: 1px solid #10B981;
-    color: #6EE7B7;
-    padding: 0.8mm 2mm;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 8pt;
+    font-size: 7.5pt;
+    font-weight: 600;
+    background-color: #334155;
+    color: #94A3B8;
+    margin-right: 1.5mm;
   }}
 </style>
 </head>
@@ -311,11 +311,11 @@ html_content = f"""<!DOCTYPE html>
 <!-- SLIDE 1: TRANG BÌA -->
 <div class="slide cover-slide">
   <div>
-    <div class="cover-badge">BÁO CÁO XU HƯỚNG CÔNG NGHỆ · BUỔI 18 (TRACK DA)</div>
-    <h1 class="cover-main-h1">ELT Thay Cho ETL</h1>
-    <div class="cover-main-sub">Đảo chiều kiến trúc dữ liệu trong kỷ nguyên Cloud Data Warehouse</div>
+    <div class="cover-badge">BÁO CÁO CHUYÊN ĐỀ TỐT NGHIỆP 1 · BUỔI 18 (TRACK DA)</div>
+    <h1 class="cover-main-h1">Xu Hướng Chuyển Đổi Từ ETL Sang ELT</h1>
+    <div class="cover-main-sub">Mô hình xử lý dữ liệu với Cloud Data Warehouse & công cụ dbt</div>
     <div class="cover-desc">
-      Giải mã sự dịch chuyển từ việc tự viết mã làm sạch trước khi nạp sang đổ dữ liệu thô vào kho rồi biến đổi bằng SQL/dbt; đánh giá cái giá phải trả về bảo mật PII, chi phí compute và đối chiếu phản biện vào prototype SmartCRM.
+      Tìm hiểu bản chất của mô hình ELT, các điểm cải thiện so với ETL truyền thống, những yếu tố cần cân nhắc về chi phí và an toàn dữ liệu, cùng đánh giá thực tế khi áp dụng cho hệ thống SmartCRM Mekong Mobile.
     </div>
   </div>
 
@@ -333,7 +333,7 @@ html_content = f"""<!DOCTYPE html>
       71ITGR40203_01 (K23T)
     </div>
     <div class="cover-meta-item">
-      <strong>Chuyên ngành (Track)</strong>
+      <strong>Chuyên ngành</strong>
       Data Analytics (DA)
     </div>
     <div class="cover-meta-item">
@@ -350,35 +350,39 @@ html_content = f"""<!DOCTYPE html>
 <!-- SLIDE 2: MỤC 1 — LÀ GÌ & VÍ DỤ THẬT -->
 <div class="slide">
   <div class="slide-header">
-    <div class="slide-category">MỤC 1 · ĐỊNH NGHĨA & VÍ DỤ THẬT</div>
-    <h2 class="slide-title">ELT là gì: Nạp nguyên trạng dữ liệu thô vào kho, sau đó dùng SQL để biến đổi</h2>
-    <div class="slide-subtitle">Chỉ đảo vị trí chữ T (Transform) và L (Load), nhưng làm thay đổi toàn bộ triết lý thiết kế Data Pipeline.</div>
+    <div class="slide-category">MỤC 1 · KHÁI NIỆM & VÍ DỤ THỰC TẾ</div>
+    <h2 class="slide-title">ELT là gì: Nạp dữ liệu thô vào kho trước, sau đó biến đổi bằng SQL</h2>
+    <div class="slide-subtitle">Sự thay đổi thứ tự giữa bước biến đổi (Transform) và nạp dữ liệu (Load) dựa trên năng lực lưu trữ và tính toán của kho dữ liệu hiện đại.</div>
   </div>
 
   <div class="compare-box">
-    <div class="compare-item old">
-      <div class="compare-header old-title">Mô hình cũ: ETL (Extract &rarr; Transform &rarr; Load)</div>
-      <p style="font-size: 9pt; color: #CBD5E1; line-height: 1.45;">
-        Dữ liệu từ nguồn được đọc ra &rarr; Máy chủ trung gian (chạy Python/Spark/Talend) gọt giũa, làm sạch, lọc bỏ dòng lỗi &rarr; Chỉ những bản ghi đã đạt chuẩn mới được nạp vào kho dữ liệu sạch.
-      </p>
-      <div style="background-color: #0F172A; padding: 2mm 3mm; border-radius: 4px; font-family: monospace; font-size: 8.5pt; color: #94A3B8; margin-top: 3mm;">
-        CSV thô ──&gt; [Python Server biến đổi] ──&gt; Kho CSDL sạch
+    <div class="compare-item etl">
+      <div>
+        <div class="compare-header etl-title">Mô hình truyền thống: ETL (Extract &rarr; Transform &rarr; Load)</div>
+        <p style="font-size: 8.8pt; color: #CBD5E1; line-height: 1.5; margin: 0;">
+          Dữ liệu được trích xuất từ nguồn &rarr; Chuyển qua máy chủ trung gian (chạy mã Python, Java hoặc Spark) để làm sạch, định dạng và lọc lỗi &rarr; Nạp dữ liệu đã xử lý vào kho dữ liệu.
+        </p>
+      </div>
+      <div class="diagram-flow">
+        Nguồn dữ liệu &rarr; [Máy chủ trung gian làm sạch] &rarr; Kho dữ liệu đích
       </div>
     </div>
 
-    <div class="compare-item new">
-      <div class="compare-header new-title">Mô hình mới: ELT (Extract &rarr; Load &rarr; Transform)</div>
-      <p style="font-size: 9pt; color: #CBD5E1; line-height: 1.45;">
-        Dữ liệu từ nguồn được đổ thẳng vào bảng Staging của kho dữ liệu đám mây (BigQuery, Snowflake, DuckDB) &rarr; Các chuyên viên phân tích dùng chính sức mạnh SQL của kho và công cụ <strong>dbt</strong> để làm sạch và dựng bảng Fact/Dim.
-      </p>
-      <div style="background-color: #0F172A; padding: 2mm 3mm; border-radius: 4px; font-family: monospace; font-size: 8.5pt; color: #38BDF8; margin-top: 3mm;">
-        CSV thô ──&gt; Đổ thẳng vào Kho (Staging) ──&gt; [Chạy SQL/dbt biến đổi]
+    <div class="compare-item elt">
+      <div>
+        <div class="compare-header elt-title">Mô hình hiện đại: ELT (Extract &rarr; Load &rarr; Transform)</div>
+        <p style="font-size: 8.8pt; color: #CBD5E1; line-height: 1.5; margin: 0;">
+          Dữ liệu từ nguồn được nạp thẳng vào bảng tạm (Staging) trong kho dữ liệu đám mây (BigQuery, Snowflake, DuckDB) &rarr; Các phép làm sạch và mô hình hóa được thực hiện trực tiếp trong kho bằng câu lệnh SQL.
+        </p>
+      </div>
+      <div class="diagram-flow active">
+        Nguồn dữ liệu &rarr; Nạp vào bảng tạm trong kho &rarr; [Biến đổi bằng SQL/dbt]
       </div>
     </div>
   </div>
 
   <div class="callout-box">
-    <strong>Ví dụ thật:</strong> <strong>Fivetran</strong> (kéo dữ liệu từ 500+ nguồn đổ thẳng vào kho mà không sửa đổi) kết hợp cùng <strong>dbt (data build tool)</strong> — công cụ quản lý các câu lệnh SQL biến đổi dữ liệu thành các bảng Fact/Dim có kiểm thử và đánh số phiên bản như mã nguồn phần mềm. Hiện nay hơn 50.000 công ty dữ liệu đang vận hành theo mô hình Fivetran + dbt + Snowflake này.
+    <strong>Ví dụ ứng dụng thực tế:</strong> Các công cụ như <strong>Fivetran</strong> hoặc <strong>Airbyte</strong> đóng vai trò đồng bộ dữ liệu thô từ các nguồn (CRM, cơ sở dữ liệu giao dịch) vào kho dữ liệu. Sau đó, công cụ <strong>dbt (data build tool)</strong> giúp các chuyên viên phân tích quản lý, kiểm thử và thực thi các câu lệnh SQL để xây dựng các bảng Fact và Dimension phục vụ báo cáo.
   </div>
 
   <div class="slide-footer">
@@ -390,38 +394,38 @@ html_content = f"""<!DOCTYPE html>
 <!-- SLIDE 3: MỤC 2 — GIẢI QUYẾT VẤN ĐỀ GÌ -->
 <div class="slide">
   <div class="slide-header">
-    <div class="slide-category">MỤC 2 · VẤN ĐỀ NÓ GIẢI QUYẾT</div>
-    <h2 class="slide-title">Giải quyết 3 điểm nghẽn lớn: Máy chủ trung gian, Mất dữ liệu gốc và Cô lập nghiệp vụ</h2>
-    <div class="slide-subtitle">Trước đây: kỹ sư dữ liệu làm việc độc lập, biến đổi sai là mất vĩnh viễn dữ liệu gốc; chuyên viên phân tích không thể can thiệp.</div>
+    <div class="slide-category">MỤC 2 · NHỮNG VẤN ĐỀ ELT GIÚP CẢI THIỆN</div>
+    <h2 class="slide-title">Ba lợi thế thực tế của mô hình ELT trong quy trình phân tích dữ liệu</h2>
+    <div class="slide-subtitle">Tận dụng năng lực tính toán phân tán của các kho dữ liệu hiện đại và tối ưu hóa sự phối hợp trong đội ngũ kỹ thuật.</div>
   </div>
 
   <div class="grid-3">
-    <div class="card card-highlight">
-      <div class="card-title">1. Xóa bỏ "Cổ chai tính toán"</div>
+    <div class="card card-blue">
+      <div class="card-title">1. Giảm tải cho máy chủ xử lý</div>
       <div class="card-content">
         <ul>
-          <li><strong>Trước đây (ETL):</strong> Máy chủ chạy Python phải đủ RAM để đọc và xử lý hàng triệu dòng. Khi dữ liệu tăng gấp 10 lần, server bị tràn bộ nhớ (Out-Of-Memory) và nghẽn toàn bộ pipeline.</li>
-          <li><strong>Với ELT:</strong> Giao phó toàn bộ việc tính toán nặng cho kho dữ liệu đám mây vốn có khả năng mở rộng hàng chục node tính toán song song chỉ trong vài giây.</li>
+          <li><strong>Mô hình ETL:</strong> Máy chủ xử lý trung gian phải chịu tải toàn bộ các phép tính toán và lọc dữ liệu. Khi khối lượng dữ liệu tăng cao, hệ thống dễ gặp tình trạng thiếu bộ nhớ (RAM).</li>
+          <li><strong>Mô hình ELT:</strong> Chuyển các tác vụ xử lý nặng sang kho dữ liệu đám mây vốn có khả năng tự động mở rộng tài nguyên tính toán theo nhu cầu.</li>
         </ul>
       </div>
     </div>
 
-    <div class="card card-highlight">
-      <div class="card-title">2. Bảo toàn tuyệt đối Dữ liệu gốc</div>
+    <div class="card card-blue">
+      <div class="card-title">2. Lưu giữ dữ liệu thô ban đầu</div>
       <div class="card-content">
         <ul>
-          <li><strong>Trước đây (ETL):</strong> Viết nhầm một quy tắc làm sạch (như cắt nhầm tiền tố SĐT) &rarr; nạp số liệu hỏng vào kho, không thể cứu lại được vì dữ liệu thô đã bị bỏ qua ngoài kho.</li>
-          <li><strong>Với ELT:</strong> Bảng Staging lưu nguyên vẹn 100% dữ liệu thô ban đầu. Nếu quy tắc làm sạch bị sai, chỉ cần sửa câu lệnh SQL/dbt và chạy lại (Rerun) từ dữ liệu thô có sẵn trong kho.</li>
+          <li><strong>Mô hình ETL:</strong> Dữ liệu sau khi qua bước làm sạch mới được lưu trữ; nếu quy tắc làm sạch ban đầu có sai sót thì việc tái tạo lại dữ liệu gốc gặp khó khăn.</li>
+          <li><strong>Mô hình ELT:</strong> Dữ liệu gốc được lưu nguyên vẹn tại tầng Staging. Khi cần điều chỉnh logic nghiệp vụ, người dùng chỉ cần cập nhật lại câu lệnh SQL và thực thi lại.</li>
         </ul>
       </div>
     </div>
 
-    <div class="card card-highlight">
-      <div class="card-title">3. Dân chủ hóa ngôn ngữ (Dùng SQL)</div>
+    <div class="card card-blue">
+      <div class="card-title">3. Tận dụng trực tiếp ngôn ngữ SQL</div>
       <div class="card-content">
         <ul>
-          <li><strong>Trước đây (ETL):</strong> Logic nghiệp vụ bị "khóa chặt" trong hàng nghìn dòng code Python phức tạp; Data Analyst hiểu rõ nghiệp vụ nhưng không sửa được code.</li>
-          <li><strong>Với ELT:</strong> Mọi biến đổi được viết bằng câu lệnh <strong>SELECT SQL</strong> quen thuộc; Data Analyst có thể tự viết, tự sửa quy tắc mà không cần chờ Data Engineer.</li>
+          <li><strong>Mô hình ETL:</strong> Thường phụ thuộc vào mã nguồn của kỹ sư phần mềm (Python, Scala), khiến các chuyên viên phân tích nghiệp vụ khó can thiệp trực tiếp.</li>
+          <li><strong>Mô hình ELT:</strong> Logic biến đổi được viết bằng câu lệnh SQL chuẩn kết hợp với dbt, giúp các bạn Data Analyst dễ dàng theo dõi và chủ động xây dựng dữ liệu.</li>
         </ul>
       </div>
     </div>
@@ -436,40 +440,39 @@ html_content = f"""<!DOCTYPE html>
 <!-- SLIDE 4: MỤC 3 — ĐÁNH ĐỔI & KHI NÀO KHÔNG DÙNG -->
 <div class="slide">
   <div class="slide-header">
-    <div class="slide-category">MỤC 3 · ĐÁNH ĐỔI & KHI NÀO KHÔNG NÊN DÙNG (MỤC QUYẾT ĐỊNH ĐIỂM)</div>
-    <h2 class="slide-title">Mặt tối của ELT: "Cháy túi" chi phí điện toán đám mây & Nguy cơ lộ lọt dữ liệu nhạy cảm PII</h2>
-    <div class="slide-subtitle">Không phải lúc nào ELT cũng tốt — Kỹ sư dữ liệu giỏi phải nhìn ra cái giá phải trả và các rủi ro pháp lý.</div>
+    <div class="slide-category">MỤC 3 · NHỮNG ĐIỂM CẦN CÂN NHẮC & TRƯỜNG HỢP KHÔNG NÊN DÙNG</div>
+    <h2 class="slide-title">Những điểm đánh đổi về chi phí hạ tầng và tính an toàn dữ liệu</h2>
+    <div class="slide-subtitle">Bất kỳ kiến trúc nào cũng có giới hạn; việc lựa chọn cần căn cứ vào bài toán thực tế và yêu cầu bảo mật.</div>
   </div>
 
   <div class="grid-3">
-    <div class="card card-danger">
-      <div class="card-title">Số liệu thực tế đo đạc</div>
+    <div class="card card-amber">
+      <div class="card-title">Chi phí lưu trữ và tính toán</div>
       <div class="card-content">
         <ul>
-          <li><span class="badge-stat">+40% – 60%</span> dung lượng lưu trữ phát sinh do phải lưu trữ cả dữ liệu rác, dòng lỗi và các bảng trung gian (Fivetran Benchmark 2024).</li>
-          <li><span class="badge-stat">3.2 lần</span> chi phí hóa đơn Cloud tăng vọt do các câu lệnh SQL viết ẩu chạy quét toàn bộ bảng dữ liệu lớn (BigQuery/Snowflake slot scanning).</li>
-          <li><span class="badge-stat">58%</span> tổ chức gặp khó khăn trong việc kiểm soát chi phí điện toán đám mây sau khi chuyển từ ETL sang ELT (Gartner 2025).</li>
+          <li><strong>Dung lượng lưu trữ tăng:</strong> Việc lưu đồng thời dữ liệu thô, các bảng trung gian và bảng kết quả khiến dung lượng lưu trữ tăng thêm khoảng 40% – 60% (theo báo cáo Fivetran 2024).</li>
+          <li><strong>Chi phí truy vấn:</strong> Các nền tảng đám mây tính phí theo lượng dữ liệu được quét. Nếu các câu lệnh SQL viết chưa tối ưu, chi phí vận hành hàng tháng có thể tăng đáng kể.</li>
         </ul>
       </div>
     </div>
 
-    <div class="card card-danger">
-      <div class="card-title">Rủi ro pháp lý & Bảo mật PII</div>
+    <div class="card card-amber">
+      <div class="card-title">Vấn đề bảo mật dữ liệu cá nhân</div>
       <div class="card-content">
         <ul>
-          <li><strong>Vi phạm Luật BV Dữ liệu cá nhân (số 91/2025/QH15):</strong> Đổ dữ liệu thô chứa SĐT, CMND, Email thật thẳng vào kho dữ liệu đám mây làm tăng diện tích tấn công (Attack Surface).</li>
-          <li>Bất kỳ nhân viên nào có quyền truy cập bảng Staging đều có thể đọc được dữ liệu cá nhân nhạy cảm chưa che mặt nạ!</li>
+          <li><strong>Lưu trữ dữ liệu thô:</strong> Đưa trực tiếp dữ liệu chưa qua xử lý vào kho có thể khiến các thông tin cá nhân (như SĐT, email, địa chỉ) tồn tại ở dạng rõ trong bảng Staging.</li>
+          <li><strong>Yêu cầu tuân thủ:</strong> Theo các quy định về bảo vệ dữ liệu cá nhân (Nghị định 13/2023/NĐ-CP và Luật Bảo vệ dữ liệu cá nhân), thông tin định danh cần được phân quyền chặt chẽ hoặc che giấu phù hợp trước khi chia sẻ quyền truy cập.</li>
         </ul>
       </div>
     </div>
 
-    <div class="card card-danger">
-      <div class="card-title">Khi nào KHÔNG NÊN DÙNG?</div>
+    <div class="card card-amber">
+      <div class="card-title">Trường hợp nên giữ mô hình ETL</div>
       <div class="card-content">
         <ul>
-          <li><strong>Dữ liệu chứa thông tin nhạy cảm:</strong> Bắt buộc phải mã hóa/che mặt nạ ngay tại biên (Edge) trước khi lưu trữ.</li>
-          <li><strong>Dự án quy mô nhỏ, máy trạm cục bộ:</strong> Không có kho đám mây tự mở rộng, chạy ETL bằng Python nhanh hơn và miễn phí.</li>
-          <li><strong>Dữ liệu phi cấu trúc (Ảnh, Video, Âm thanh):</strong> SQL trong kho không thể biến đổi hiệu quả như Python/C++.</li>
+          <li><strong>Dữ liệu nhạy cảm cao:</strong> Khi dữ liệu cần được ẩn danh hoặc mã hóa ngay từ nguồn trước khi lưu trữ diện rộng.</li>
+          <li><strong>Quy mô dữ liệu vừa và nhỏ:</strong> Chạy trực tiếp script trên máy chủ hiện có nhanh và tiết kiệm hơn nhiều so với việc thuê hạ tầng đám mây.</li>
+          <li><strong>Dữ liệu phi cấu trúc:</strong> Dữ liệu dạng tệp nhị phân, hình ảnh cần thư viện xử lý chuyên biệt mà SQL không hỗ trợ tốt.</li>
         </ul>
       </div>
     </div>
@@ -484,39 +487,39 @@ html_content = f"""<!DOCTYPE html>
 <!-- SLIDE 5: MỤC 4 — LIÊN HỆ PROTOTYPE SMARTCRM -->
 <div class="slide">
   <div class="slide-header">
-    <div class="slide-category">MỤC 4 · LIÊN HỆ PROTOTYPE SMARTCRM (LUỒNG L7)</div>
-    <h2 class="slide-title">Nếu chuyển SmartCRM Mekong Mobile sang ELT: Đổi gì, Được gì & Có đáng đổi?</h2>
-    <div class="slide-subtitle">Đối chiếu cụ thể vào từng tệp mã nguồn trong repo và đưa ra kết luận kỹ thuật dũng cảm, trung thực.</div>
+    <div class="slide-category">MỤC 4 · LIÊN HỆ THỰC TẾ VỚI HỆ THỐNG SMARTCRM (LUỒNG L7)</div>
+    <h2 class="slide-title">Đánh giá khả năng chuyển đổi mô hình cho đồ án SmartCRM Mekong Mobile</h2>
+    <div class="slide-subtitle">Đối chiếu cụ thể giữa quy trình hiện tại và phương án ELT đối với tập dữ liệu 67.037 bản ghi khách hàng.</div>
   </div>
 
   <div class="grid-3">
-    <div class="card">
-      <div class="card-title">Cần đổi những chỗ nào trong Repo?</div>
+    <div class="card card-slate">
+      <div class="card-title">Nếu chuyển sang ELT cần thay đổi gì?</div>
       <div class="card-content">
         <ul>
-          <li><strong>Thay đổi pipeline:</strong> Bỏ pha Transform trong <code>src/transform/clean_customers.py</code>; module <code>src/extract/read_sources.py</code> đọc CSV và nạp thẳng 100% vào bảng <code>staging_customers</code>.</li>
-          <li><strong>Bổ sung dbt:</strong> Viết các tệp mô hình SQL dbt (<code>models/dim_customer.sql</code>, <code>models/reject_rows.sql</code>) để chạy biến đổi ngay trong kho dữ liệu.</li>
-          <li><strong>Sửa test:</strong> Chuyển 9 unit tests trong <code>tests/test_rules.py</code> thành các phép kiểm định <code>dbt test</code> trong kho.</li>
+          <li><strong>Tách bước xử lý:</strong> Module <code>read_sources.py</code> chỉ đọc file CSV và nạp toàn bộ vào bảng <code>staging_customers</code> trong cơ sở dữ liệu.</li>
+          <li><strong>Viết lại logic bằng SQL:</strong> Chuyển các hàm xử lý Python trong <code>clean_customers.py</code> thành các model SQL dbt (<code>dim_customer.sql</code>, <code>reject_rows.sql</code>).</li>
+          <li><strong>Chuyển đổi kiểm thử:</strong> Đổi các kiểm thử chất lượng dữ liệu trong <code>test_rules.py</code> sang dạng schema tests của dbt.</li>
         </ul>
       </div>
     </div>
 
-    <div class="card card-success">
-      <div class="card-title">Được gì và Mất gì?</div>
+    <div class="card card-slate">
+      <div class="card-title">So sánh ưu điểm và hạn chế</div>
       <div class="card-content">
         <ul>
-          <li><span class="badge-green">ĐƯỢC:</span> Luồng mã nguồn Python ngắn gọn hơn; nhân viên Marketing có thể tự mở tệp SQL ra chỉnh sửa tiêu chí phân loại lỗi DQ mà không cần biết lập trình Python.</li>
-          <li><span class="badge-stat">MẤT:</span> <strong>Rất nghiêm trọng về bảo mật PII (NFR05)!</strong> Toàn bộ SĐT và Email thô chưa che mặt nạ bị lưu trữ công khai trong bảng <code>staging_customers</code>, vi phạm nguyên tắc tối thiểu hóa dữ liệu của Buổi 17.</li>
+          <li><strong>Ưu điểm:</strong> Quy tắc phân loại dữ liệu (DQ01 &rarr; DQ09) được mô tả bằng cú pháp SQL quen thuộc, dễ đọc đối với các bạn làm phân tích.</li>
+          <li><strong>Hạn chế:</strong> Thông tin số điện thoại chưa được che mặt nạ sẽ xuất hiện ở bảng Staging, làm tăng rủi ro lộ lọt dữ liệu khách hàng nếu chia sẻ quyền truy cập bảng này.</li>
         </ul>
       </div>
     </div>
 
-    <div class="card card-highlight">
-      <div class="card-title">KẾT LUẬN: CÓ ĐÁNG ĐỔI KHÔNG?</div>
+    <div class="card card-emerald">
+      <div class="card-title">Đề xuất lựa chọn cho đồ án</div>
       <div class="card-content">
-        <p style="font-weight: 700; color: #EF4444; margin-bottom: 2mm;">👉 KHÔNG ĐÁNG ĐỔI VỚI BÀI TOÁN HIỆN TẠI!</p>
-        <p>Quy mô dữ liệu của Mekong Mobile hiện có <strong>67.037 bản ghi</strong>. Pipeline ETL viết bằng Python hiện tại chạy mất <strong>chỉ 1,4 giây</strong> và thực hiện che mặt nạ PII (<code>sdt_masked</code>) <em>trước khi</em> nạp vào kho dữ liệu sạch.</p>
-        <p style="margin-top: 2mm;"><strong>Bài học kỹ sư:</strong> Mô hình ETL truyền thống bảo vệ dữ liệu nhạy cảm tốt hơn nhiều so với việc đổ xô theo xu hướng ELT khi chưa có cơ chế kiểm soát truy cập cột (Column-level security) hoàn chỉnh.</p>
+        <p style="font-weight: 700; color: #10B981; margin-bottom: 2mm;">Lựa chọn phù hợp: Tiếp tục duy trì mô hình ETL hiện tại</p>
+        <p>Quy mô dữ liệu thử nghiệm của đồ án gồm <strong>67.037 bản ghi</strong>. Quy trình ETL hiện tại viết bằng Python chạy hoàn tất chỉ trong <strong>khoảng 1,4 giây</strong> và thực hiện che số điện thoại (<code>sdt_masked</code>) ngay trong quá trình xử lý.</p>
+        <p style="margin-top: 2.5mm;"><strong>Kết luận:</strong> Với bài toán ứng dụng nội bộ chạy cục bộ, việc duy trì ETL giúp đảm bảo an toàn thông tin khách hàng ngay từ đầu, đơn giản hóa hạ tầng cài đặt và không làm phát sinh thêm chi phí dịch vụ bên ngoài.</p>
       </div>
     </div>
   </div>
@@ -530,45 +533,45 @@ html_content = f"""<!DOCTYPE html>
 <!-- SLIDE 6: MỤC 5 — TÀI LIỆU THAM KHẢO -->
 <div class="slide">
   <div class="slide-header">
-    <div class="slide-category">MỤC 5 · TÀI LIỆU THAM KHẢO & NGUỒN ĐỌC THẬT</div>
-    <h2 class="slide-title">Các nguồn tài liệu chính thức và báo cáo ngành đã nghiên cứu</h2>
-    <div class="slide-subtitle">Đọc và kiểm chứng trong tháng 11/2026. Mọi số liệu và lập luận đều dẫn xuất từ các tổ chức uy tín.</div>
+    <div class="slide-category">MỤC 5 · TÀI LIỆU THAM KHẢO</div>
+    <h2 class="slide-title">Danh mục tài liệu kỹ thuật và báo cáo nghiên cứu tham khảo</h2>
+    <div class="slide-subtitle">Các tài liệu chính thức từ nhà cung cấp giải pháp, báo cáo ngành và văn bản quy định pháp lý.</div>
   </div>
 
   <table class="ref-table">
     <thead>
       <tr>
-        <th style="width: 25%;">Tên nguồn tài liệu</th>
-        <th style="width: 35%;">Nội dung đã sử dụng trong bài</th>
-        <th>Lý do tin cậy & Phương pháp kiểm chứng</th>
+        <th style="width: 25%;">Tên tài liệu / Nguồn</th>
+        <th style="width: 45%;">Nội dung tham khảo chính</th>
+        <th>Loại tài liệu</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>dbt Labs Official Documentation</strong><br><em>docs.getdbt.com (11/2026)</em></td>
-        <td>Nguyên lý hoạt động của kiến trúc ELT; cách thức dbt biên dịch các câu lệnh SELECT SQL thành bảng vật lý và View trong kho.</td>
-        <td>Tài liệu kỹ thuật chính thức từ dbt Labs — công cụ dẫn đầu thị trường về tầng biến đổi dữ liệu (Transformation Layer).</td>
+        <td><strong>dbt Labs Documentation</strong><br><em>docs.getdbt.com</em></td>
+        <td>Nguyên lý xây dựng mô hình dữ liệu theo hướng ELT; cách tổ chức các tầng Staging, Intermediate, Marts bằng câu lệnh SELECT SQL.</td>
+        <td>Tài liệu kỹ thuật chính thức</td>
       </tr>
       <tr>
-        <td><strong>Fivetran Data Engineering Survey 2024</strong></td>
-        <td>Số liệu dung lượng lưu trữ phát sinh tăng 40–60% khi lưu trữ cả dữ liệu thô và các tầng dữ liệu trung gian trong kho đám mây.</td>
-        <td>Khảo sát trên 1.000 chuyên gia kỹ thuật dữ liệu của nền tảng tích hợp ELT hàng đầu thế giới; có phương pháp đo lường độc lập.</td>
+        <td><strong>Fivetran Data Survey (2024)</strong></td>
+        <td>Khảo sát về xu hướng dịch chuyển từ ETL sang ELT trong các doanh nghiệp và mức độ gia tăng dung lượng lưu trữ trung bình.</td>
+        <td>Báo cáo khảo sát ngành</td>
       </tr>
       <tr>
-        <td><strong>Gartner Research — Cloud Data Management Cost Report 2025</strong></td>
-        <td>Số liệu 58% doanh nghiệp bị đội chi phí hóa đơn đám mây sau khi chuyển sang ELT do các truy vấn SQL quét toàn bảng (Full scan).</td>
-        <td>Báo cáo phân tích thị trường công nghệ uy tín toàn cầu của Gartner; cung cấp cái nhìn khách quan về đánh đổi tài chính.</td>
+        <td><strong>Gartner Research (2025)</strong><br><em>Cloud Data Management Trends</em></td>
+        <td>Đánh giá về chi phí tài nguyên tính toán và các yếu tố cần quản lý khi mở rộng kho dữ liệu đám mây.</td>
+        <td>Báo cáo phân tích thị trường</td>
       </tr>
       <tr>
-        <td><strong>Luật Bảo vệ Dữ liệu Cá nhân Việt Nam</strong><br><em>(Luật số 91/2025/QH15)</em></td>
-        <td>Nguyên tắc tối thiểu hóa dữ liệu và nghĩa vụ che mặt nạ/ẩn danh dữ liệu cá nhân nhạy cảm (PII) trước khi lưu trữ diện rộng.</td>
-        <td>Văn bản quy phạm pháp luật chính thức của Quốc hội Việt Nam, có hiệu lực từ ngày 01/01/2026; liên kết bài học Buổi 17.</td>
+        <td><strong>Quy định bảo vệ dữ liệu cá nhân tại Việt Nam</strong><br><em>(Nghị định 13/2023/NĐ-CP & Luật BV Dữ liệu cá nhân)</em></td>
+        <td>Các yêu cầu về tối thiểu hóa phạm vi thu thập, bảo vệ thông tin nhận dạng cá nhân (PII) và trách nhiệm của đơn vị xử lý dữ liệu.</td>
+        <td>Văn bản quy phạm pháp luật</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="callout-box" style="margin-top: 1mm; margin-bottom: 2mm;">
-    <strong>Cam kết liêm chính học thuật:</strong> Sinh viên đã đọc, đối chiếu và kiểm chứng các tài liệu trên vào ngày <strong>16/11/2026</strong>. Bài trình bày tập trung vào việc làm chủ bản chất kỹ thuật, rủi ro đánh đổi và trách nhiệm bảo vệ dữ liệu cá nhân theo pháp luật.
+  <div class="callout-box" style="margin-top: 2mm; margin-bottom: 2mm;">
+    <strong>Ghi chú:</strong> Nội dung báo cáo được tổng hợp, đối chiếu và chuẩn bị phục vụ phần thuyết trình Chuyên đề Tốt nghiệp 1 (Buổi 18).
   </div>
 
   <div class="slide-footer">
